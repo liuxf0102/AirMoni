@@ -10,3 +10,4 @@ themes
 hybrid/plugins/*
 !hybrid/plugins/fetch.json
 
+/nbproject/private/

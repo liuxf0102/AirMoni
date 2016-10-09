@@ -12,7 +12,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojgauge'],
             function dialGaugeData() {
 
                 var self = this;
-                this.gaugeValue = ko.observable(50);
+                this.gaugeValue = ko.observable(31);
                 this.isReadOnly =ko.observable(false);
                  self.buttonClick = function(data, event) 
                 {
