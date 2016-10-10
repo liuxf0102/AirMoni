@@ -67,20 +67,31 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         series: [
                             {
                                 name: '当前温度',
-                                silent:false,
+                                silent: false,
                                 type: 'gauge',
-                                min: -20,
+                                min: -30,
                                 max: 50,
-                                radius: '88%',
-                                detail: {formatter: '{value}℃', textStyle: {
+                                radius: '98%',
+                                precision: 0, // 小数精度，默认为0，无小数点
+
+                                axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.55, 'skyblue'], [0.75, 'green'], [1, '#ff4500']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: '温度:{value}℃', 
+                                    offsetCenter: [0, '80%'],
+                                    textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 31, textStyle: {
+                                data: [{value: 24, name: '', textStyle: {
                                             color: 'blue',
                                             fontSize: 14
                                         }}],
@@ -88,12 +99,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                     show: true,
                                     distance: 0,
                                     textStyle: {
-                                        fontStyle: 'normal',
-                                        fontWeight: 'normal',
-                                        fontFamily: 'sans-serif',
-                                        fontSize: 4,
-                                    },
-                                    color: 'auto'
+                                        color: '#333'
+                                    }
+
                                 }
                             }
                         ]
@@ -103,7 +111,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         parent.location = "index.html?root=incidents";
                     });
 
-                 $("#main2").css({
+                    $("#main2").css({
                         height: function () {
                             return myheight;
                         },
@@ -114,19 +122,29 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                     chart2.setOption({
                         series: [
                             {
+                                name: '当前湿度',
                                 type: 'gauge',
-                                min: 20,
-                                max: 50,
+                                min: 0,
+                                max: 100,
                                 radius: '98%',
-                                detail: {formatter: '{value}℃', textStyle: {
+                                 axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.25, 'skyblue'], [0.7, 'green'], [1, '#ff4500']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: '湿度:{value}%', 
+                                    offsetCenter: [0, '80%'],
+                                    textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '气温', textStyle: {
+                                data: [{value: 21, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -162,18 +180,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         series: [
                             {
                                 type: 'gauge',
-                                min: -20,
-                                max: 50,
+                                min: 0,
+                                max: 1000,
                                 radius: '98%',
-                                detail: {formatter: '{value}℃', textStyle: {
-                                        color: 'red',
+                                 axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: 'PM2.5:{value}', 
+                                    offsetCenter: [0, '80%'],
+                                    textStyle: {
+                                        color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '气温', textStyle: {
+                                data: [{value: 41, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -208,18 +235,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         series: [
                             {
                                 type: 'gauge',
-                                min: -20,
-                                max: 50,
+                                min: 0,
+                                max: 1000,
                                 radius: '98%',
-                                detail: {formatter: '{value}℃', textStyle: {
+                                 axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: 'PM10:{value}', 
+                                offsetCenter: [0, '80%'],    
+                                    textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '气温', textStyle: {
+                                data: [{value: 10, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -254,18 +290,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         series: [
                             {
                                 type: 'gauge',
-                                min: -20,
-                                max: 50,
+                                min: 0,
+                                max: 500,
                                 radius: '98%',
-                                detail: {formatter: '{value}℃', textStyle: {
+                                  axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: '甲醛:{value}',
+                                offsetCenter: [0, '80%'],    
+                                    textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '气温', textStyle: {
+                                data: [{value: 21, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -300,18 +345,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         series: [
                             {
                                 type: 'gauge',
-                                min: -20,
-                                max: 50,
+                                min: 0,
+                                max: 500,
                                 radius: '98%',
-                                detail: {formatter: '{value}℃', textStyle: {
+                                  axisLine: {// 坐标轴线
+                                    show: true, // 默认显示，属性show控制显示与否
+                                    lineStyle: {// 属性lineStyle控制线条样式
+                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        width: 30
+                                    }
+                                },
+                                detail: {formatter: '挥发物:{value}', 
+                                offsetCenter: [0, '80%'],    
+                                    textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
                                         fontWeight: 'normal',
                                         fontFamily: 'sans-serif',
-                                        fontSize: 12,
+                                        fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '气温', textStyle: {
+                                data: [{value: 21, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -346,8 +400,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 self.handleDetached = function (info) {
                     // Implement if needed
                 };
-                
-                
+              
+
             }
 
             /*
@@ -358,3 +412,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
             return new CustomerViewModel();
         }
 );
+  function gaugeClicked(obj)
+     {
+           parent.location = "index.html?root=incidents";
+     }
