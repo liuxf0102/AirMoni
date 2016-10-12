@@ -5,11 +5,22 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery'],
+define(['ojs/ojcore', 'knockout', 'jquery','ojs/ojnavigationlist','ojs/ojswitch','ojs/ojradioset'],
  function(oj, ko, $) {
   
     function DashboardViewModel() {
       var self = this;
+      
+           //this.navigationLevel = ko.observable('page');
+           //this.isChecked = ko.observable();
+           //this.isChecked.subscribe(function(newValue){
+               var navlistInstances = $('#navlistdemo').find(':oj-navigationlist');
+//               if(newValue){
+//                   navlistInstances.addClass('oj-sm-condense');
+//               }else{
+//                   navlistInstances.removeClass('oj-sm-condense');
+//               }
+         //  });
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
 
@@ -60,9 +71,10 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
  /*高为屏幕的高*/       
  $("#map").css({           
      height: function () {           
-         return $(document).height()-90;       
+         return $(document).height()-120;       
      },           
-     width:"100%"        
+     width:"100%"
+     
  });   
   
     /* 坐标 */  
