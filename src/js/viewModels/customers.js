@@ -5,6 +5,9 @@
 /*
  * Your customer ViewModel code goes here
  */
+var js_var_chart3 ;
+var js_var_chart3_option ;
+var js_var_chart3_value =12;
 define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion', 'ojs/ojcollapsible', 'ojs/ojradioset'],
         function (oj, ko, $) {
 
@@ -81,7 +84,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         width: 30
                                     }
                                 },
-                                detail: {formatter: '温度:{value}℃', 
+                                detail: {formatter: '温度:{value}℃',
                                     offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
@@ -127,14 +130,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 min: 0,
                                 max: 100,
                                 radius: '98%',
-                                 axisLine: {// 坐标轴线
+                                axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
                                         color: [[0.25, 'skyblue'], [0.7, 'green'], [1, '#ff4500']],
                                         width: 30
                                     }
                                 },
-                                detail: {formatter: '湿度:{value}%', 
+                                detail: {formatter: '湿度:{value}%',
                                     offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
@@ -175,22 +178,24 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart3 = echarts.init(document.getElementById('main3'));
-                    chart3.setOption({
+                    js_var_chart3 = echarts.init(document.getElementById('main3'));
+                    
+                    js_var_chart3_option =
+                    {
                         series: [
                             {
                                 type: 'gauge',
                                 min: 0,
                                 max: 1000,
                                 radius: '98%',
-                                 axisLine: {// 坐标轴线
+                                axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
-                                detail: {formatter: 'PM2.5:{value}', 
+                                detail: {formatter: 'PM2.5:{value}',
                                     offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
@@ -200,7 +205,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 41, name: '', textStyle: {
+                                data: [{value: js_var_chart3_value, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -217,11 +222,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 }
                             }
                         ]
-                    });
-                    chart3.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
+                    };
+                    js_var_chart3.setOption(js_var_chart3_option,true);
+//                    chart3.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
 
                     $("#main4").css({
                         height: function () {
@@ -238,15 +244,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 min: 0,
                                 max: 1000,
                                 radius: '98%',
-                                 axisLine: {// 坐标轴线
+                                axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
-                                detail: {formatter: 'PM10:{value}', 
-                                offsetCenter: [0, '80%'],    
+                                detail: {formatter: 'PM10:{value}',
+                                    offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
@@ -293,15 +299,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 min: 0,
                                 max: 500,
                                 radius: '98%',
-                                  axisLine: {// 坐标轴线
+                                axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
                                 detail: {formatter: '甲醛:{value}',
-                                offsetCenter: [0, '80%'],    
+                                    offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
@@ -348,15 +354,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 min: 0,
                                 max: 500,
                                 radius: '98%',
-                                  axisLine: {// 坐标轴线
+                                axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'],[0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
-                                detail: {formatter: '挥发物:{value}', 
-                                offsetCenter: [0, '80%'],    
+                                detail: {formatter: '挥发物:{value}',
+                                    offsetCenter: [0, '80%'],
                                     textStyle: {
                                         color: 'auto',
                                         fontStyle: 'normal',
@@ -400,7 +406,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 self.handleDetached = function (info) {
                     // Implement if needed
                 };
-              
+
 
             }
 
@@ -412,7 +418,46 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
             return new CustomerViewModel();
         }
 );
-  function gaugeClicked(obj)
-     {
-           parent.location = "index.html?root=incidents";
-     }
+function gaugeClicked(obj)
+{
+    parent.location = "index.html?root=incidents";
+}
+
+function js_getIOTData()
+{
+//    $.ajaxSettings("dataType","jsonp");
+//    $.post('https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1',{"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM=",
+//            "X-Content-Type-Options":"nosniff"
+//        },function(data){
+//            alert(1);
+//        });
+//    return;
+    var aj = $.ajax({
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1',
+        headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
+            
+        },
+        ContentType:"application/javascript;charset=utf-8",
+        type: 'get',
+        dataType:'json', 
+        cache: false,
+        success: function (data) {
+            // alert(self.decryptByDES(data) );
+            console.log(data);
+            js_var_chart3_option.series[0].data[0].value = data.items[0].payload.data.pm25;
+            js_var_chart3.setOption(js_var_chart3_option,true);
+          
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            // view("异常！");  
+            //alert("error");
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log("errorThrown=" + errorThrown);
+
+        }
+    });
+
+
+}
+
