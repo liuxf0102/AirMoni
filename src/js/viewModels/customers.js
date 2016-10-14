@@ -436,7 +436,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                     // Implement if needed
                 };
 
-                setInterval("js_getIOTData()", 5000);
+                js_getIOTData();
 
             }
 
@@ -494,6 +494,7 @@ function js_getIOTData()
             js_var_chart6_option.series[0].data[0].value = data.items[0].payload.data.vocs.toFixed(2);
             js_var_chart6.setOption(js_var_chart6_option, true);
 
+            setInterval("js_getIOTData()", 5000);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             // view("异常！");  
