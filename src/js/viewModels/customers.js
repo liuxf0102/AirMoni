@@ -5,9 +5,31 @@
 /*
  * Your customer ViewModel code goes here
  */
-var js_var_chart3 ;
-var js_var_chart3_option ;
-var js_var_chart3_value =12;
+var js_var_chart1;
+var js_var_chart1_option;
+var js_var_chart1_value = 12;
+
+var js_var_chart2;
+var js_var_chart2_option;
+var js_var_chart2_value = 12;
+
+var js_var_chart3;
+var js_var_chart3_option;
+var js_var_chart3_value = 12;
+
+var js_var_chart4;
+var js_var_chart4_option;
+var js_var_chart4_value = 12;
+
+var js_var_chart5;
+var js_var_chart5_option;
+var js_var_chart5_value = 12;
+
+var js_var_chart6;
+var js_var_chart6_option;
+var js_var_chart6_value = 12;
+
+
 define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion', 'ojs/ojcollapsible', 'ojs/ojradioset'],
         function (oj, ko, $) {
 
@@ -55,7 +77,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                  */
                 self.handleBindingsApplied = function (info) {
                     // Implement if needed
-                    var myheight = $(document).height() - 380;
+                    var myheight = ($(document).height()-120) /3;
                     /*高为屏幕的高*/
                     $("#main1").css({
                         height: function () {
@@ -64,8 +86,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart1 = echarts.init(document.getElementById('main1'));
-                    chart1.setOption({
+                    js_var_chart1 = echarts.init(document.getElementById('main1'));
+                    js_var_chart1_option = {
                         tooltip: {formatter: "{a}: {c}℃"},
                         series: [
                             {
@@ -94,7 +116,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 24, name: '', textStyle: {
+                                data: [{value: js_var_chart1_value, name: '', textStyle: {
                                             color: 'blue',
                                             fontSize: 14
                                         }}],
@@ -108,11 +130,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 }
                             }
                         ]
-                    });
-                    chart1.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
+                    };
+                    js_var_chart1.setOption(js_var_chart1_option, true);
+                    
+  
+//                    chart1.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
 
                     $("#main2").css({
                         height: function () {
@@ -121,8 +146,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart2 = echarts.init(document.getElementById('main2'));
-                    chart2.setOption({
+                    js_var_chart2 = echarts.init(document.getElementById('main2'));
+                    js_var_chart2_option = {
                         series: [
                             {
                                 name: '当前湿度',
@@ -147,65 +172,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '', textStyle: {
-                                            color: 'red',
-                                            fontSize: 10
-                                        }}],
-                                axisLabel: {
-                                    show: true,
-                                    distance: 0,
-                                    textStyle: {
-                                        fontStyle: 'normal',
-                                        fontWeight: 'normal',
-                                        fontFamily: 'sans-serif',
-                                        fontSize: 4,
-                                    },
-                                    color: 'auto'
-                                }
-                            }
-                        ]
-                    });
-                    chart2.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
-
-
-                    $("#main3").css({
-                        height: function () {
-                            return myheight;
-                        },
-                        width: "50%",
-                        float: 'left'
-                    });
-                    js_var_chart3 = echarts.init(document.getElementById('main3'));
-                    
-                    js_var_chart3_option =
-                    {
-                        series: [
-                            {
-                                type: 'gauge',
-                                min: 0,
-                                max: 1000,
-                                radius: '98%',
-                                axisLine: {// 坐标轴线
-                                    show: true, // 默认显示，属性show控制显示与否
-                                    lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
-                                        width: 30
-                                    }
-                                },
-                                detail: {formatter: 'PM2.5:{value}',
-                                    offsetCenter: [0, '80%'],
-                                    textStyle: {
-                                        color: 'auto',
-                                        fontStyle: 'normal',
-                                        fontWeight: 'normal',
-                                        fontFamily: 'sans-serif',
-                                        fontSize: 22,
-                                    }
-                                },
-                                data: [{value: js_var_chart3_value, name: '', textStyle: {
+                                data: [{value: js_var_chart2_value, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -223,7 +190,66 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                             }
                         ]
                     };
-                    js_var_chart3.setOption(js_var_chart3_option,true);
+                    js_var_chart2.setOption(js_var_chart2_option, true);
+//                    js_var_chart2.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
+
+
+                    $("#main3").css({
+                        height: function () {
+                            return myheight;
+                        },
+                        width: "50%",
+                        float: 'left'
+                    });
+                    js_var_chart3 = echarts.init(document.getElementById('main3'));
+
+                    js_var_chart3_option =
+                            {
+                                series: [
+                                    {
+                                        type: 'gauge',
+                                        min: 0,
+                                        max: 1000,
+                                        radius: '98%',
+                                        axisLine: {// 坐标轴线
+                                            show: true, // 默认显示，属性show控制显示与否
+                                            lineStyle: {// 属性lineStyle控制线条样式
+                                                color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
+                                                width: 30
+                                            }
+                                        },
+                                        detail: {formatter: 'PM2.5:{value}',
+                                            offsetCenter: [0, '80%'],
+                                            textStyle: {
+                                                color: 'auto',
+                                                fontStyle: 'normal',
+                                                fontWeight: 'normal',
+                                                fontFamily: 'sans-serif',
+                                                fontSize: 22,
+                                            }
+                                        },
+                                        data: [{value: js_var_chart3_value, name: '', textStyle: {
+                                                    color: 'red',
+                                                    fontSize: 10
+                                                }}],
+                                        axisLabel: {
+                                            show: true,
+                                            distance: 0,
+                                            textStyle: {
+                                                fontStyle: 'normal',
+                                                fontWeight: 'normal',
+                                                fontFamily: 'sans-serif',
+                                                fontSize: 4,
+                                            },
+                                            color: 'auto'
+                                        }
+                                    }
+                                ]
+                            };
+                    js_var_chart3.setOption(js_var_chart3_option, true);
 //                    chart3.on('click', function (params) {
 //                        // 控制台打印数据的名称
 //                        parent.location = "index.html?root=incidents";
@@ -236,8 +262,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart4 = echarts.init(document.getElementById('main4'));
-                    chart4.setOption({
+                    js_var_chart4 = echarts.init(document.getElementById('main4'));
+                    js_var_chart4_option = {
                         series: [
                             {
                                 type: 'gauge',
@@ -261,7 +287,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 10, name: '', textStyle: {
+                                data: [{value: js_var_chart4_value, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -278,11 +304,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 }
                             }
                         ]
-                    });
-                    chart4.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
+                    };
+                    js_var_chart4.setOption(js_var_chart4_option, true);
+//                    js_var_chart4.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
 
                     $("#main5").css({
                         height: function () {
@@ -291,8 +318,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart5 = echarts.init(document.getElementById('main5'));
-                    chart5.setOption({
+                    js_var_chart5 = echarts.init(document.getElementById('main5'));
+                    js_var_chart5_option = {
                         series: [
                             {
                                 type: 'gauge',
@@ -316,7 +343,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '', textStyle: {
+                                data: [{value: js_var_chart5_value, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -333,11 +360,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 }
                             }
                         ]
-                    });
-                    chart5.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
+                    };
+                    js_var_chart5.setOption(js_var_chart5_option, true);
+//                    js_var_chart5.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
 
                     $("#main6").css({
                         height: function () {
@@ -346,8 +374,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                         width: "50%",
                         float: 'left'
                     });
-                    var chart6 = echarts.init(document.getElementById('main6'));
-                    chart6.setOption({
+                    js_var_chart6 = echarts.init(document.getElementById('main6'));
+                    js_var_chart6_option = {
                         series: [
                             {
                                 type: 'gauge',
@@ -371,7 +399,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         fontSize: 22,
                                     }
                                 },
-                                data: [{value: 21, name: '', textStyle: {
+                                data: [{value: js_var_chart6_value, name: '', textStyle: {
                                             color: 'red',
                                             fontSize: 10
                                         }}],
@@ -388,11 +416,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 }
                             }
                         ]
-                    });
-                    chart6.on('click', function (params) {
-                        // 控制台打印数据的名称
-                        parent.location = "index.html?root=incidents";
-                    });
+                    };
+                    js_var_chart6.setOption(js_var_chart6_option, true);
+//                    js_var_chart6.on('click', function (params) {
+//                        // 控制台打印数据的名称
+//                        parent.location = "index.html?root=incidents";
+//                    });
                 };
 
                 /*
@@ -407,6 +436,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                     // Implement if needed
                 };
 
+                setInterval("js_getIOTData()", 5000);
 
             }
 
@@ -420,7 +450,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
 );
 function gaugeClicked(obj)
 {
-    parent.location = "index.html?root=incidents";
+    parent.location = "index.html?root=graphics";
 }
 
 function js_getIOTData()
@@ -435,18 +465,35 @@ function js_getIOTData()
     var aj = $.ajax({
         url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1',
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
-            
+
         },
-        ContentType:"application/javascript;charset=utf-8",
+        ContentType: "application/javascript;charset=utf-8",
         type: 'get',
-        dataType:'json', 
+        dataType: 'json',
         cache: false,
         success: function (data) {
             // alert(self.decryptByDES(data) );
             console.log(data);
-            js_var_chart3_option.series[0].data[0].value = data.items[0].payload.data.pm25;
-            js_var_chart3.setOption(js_var_chart3_option,true);
-          
+
+            js_var_chart1_option.series[0].data[0].value = data.items[0].payload.data.temperature.toFixed(2);
+            js_var_chart1.setOption(js_var_chart1_option, true);
+
+            js_var_chart2_option.series[0].data[0].value = data.items[0].payload.data.humidity.toFixed(2);
+            js_var_chart2.setOption(js_var_chart2_option, true);
+
+            js_var_chart3_option.series[0].data[0].value = data.items[0].payload.data.pm25.toFixed(2);
+            js_var_chart3.setOption(js_var_chart3_option, true);
+
+            js_var_chart4_option.series[0].data[0].value = data.items[0].payload.data.pm10.toFixed(2);
+            js_var_chart4.setOption(js_var_chart4_option, true);
+
+            js_var_chart5_option.series[0].data[0].value = data.items[0].payload.data.hcho.toFixed(2);
+            js_var_chart5.setOption(js_var_chart5_option, true);
+
+
+            js_var_chart6_option.series[0].data[0].value = data.items[0].payload.data.vocs.toFixed(2);
+            js_var_chart6.setOption(js_var_chart6_option, true);
+
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             // view("异常！");  
