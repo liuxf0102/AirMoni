@@ -1,0 +1,21 @@
+<div id='chart-container'>
+    <div style="float:left;line-height:32px;font-weight:bold;padding-right:16px">
+        温度变化:
+    </div>
+    
+    <div id="lineChart" data-bind="ojComponent: {
+            component: 'ojChart', 
+            type: 'line',
+            series: lineSeriesValue, 
+            groups: lineGroupsValue,
+            animationOnDisplay: 'auto',
+            animationOnDataChange: 'auto',
+            styleDefaults: {lineType: ko.toJS(lineTypeValue), markerDisplayed: 'on'},
+            orientation: orientationValue
+        }"
+         style="max-width:500px;width:100%;height:350px;">
+    </div>
+    <label data-bind="attr: {for: id}"></label>
+    <br><br><br><br>
+   
+</div>

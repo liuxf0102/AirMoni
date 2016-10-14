@@ -1,0 +1,40 @@
+{
+    "items": [{
+            "id": "cd8ad977-4bf7-42ee-b488-0b0c6af9dd0f",
+            "clientId": "70a21578-f6e3-4730-b90c-dba2ba2ec473",
+            "source": "AAAAAAR1RL0A-BE",
+            "destination": "",
+            "priority": "LOW",
+            "reliability": "BEST_EFFORT",
+            "eventTime": 1476345463463,
+            "eventTimeAsString": "2016-10-13T07:57:43Z",
+            "sender": "",
+            "type": "DATA",
+            "properties": {},
+            "direction": "FROM_DEVICE",
+            "receivedTime": 1476345459155,
+            "receivedTimeAsString": "2016-10-13T07:57:39Z",
+            "payload": {
+                "format": "urn:com:oracle:iot:china:am:data",
+                "data": {
+                    "hcho": 0.0,
+                    "pm25": 97.0,
+                    "pm10": 115.0,
+                    "temperature": 27.229999542236328,
+                    "humidity": 42.2400016784668,
+                    "vocs": 0.1599999964237213
+                }
+            }
+        }],
+    "hasMore": true,
+    "links": [{
+            "href": "https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1",
+            "rel": "self"
+        }, {
+            "href": "https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1",
+            "rel": "canonical"
+        }, {
+            "href": "https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?offset=1&limit=1&expand=true&type=DATA",
+            "rel": "next"
+        }]
+}
