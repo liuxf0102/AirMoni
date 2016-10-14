@@ -437,7 +437,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 };
 
                 js_getIOTData();
-
+                setInterval("js_getIOTData()", 5000);
             }
 
             /*
@@ -493,8 +493,11 @@ function js_getIOTData()
 
             js_var_chart6_option.series[0].data[0].value = data.items[0].payload.data.vocs.toFixed(2);
             js_var_chart6.setOption(js_var_chart6_option, true);
-
-            setInterval("js_getIOTData()", 5000);
+            
+            
+           js_saveIOTData(data);
+            
+          
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             // view("异常！");  
@@ -509,3 +512,22 @@ function js_getIOTData()
 
 }
 
+function js_saveIOTData(data)
+{
+    //get data from localStorage
+    //localStorage.setItem("pm25Series",data.items[0].payload.data.pm25.toFixed(2));    
+    var arrayPm25Serires=JSON.parse("["+localStorage.getItem("pm25Series")+"]");
+    console.log("arrageSize:"+arrayPm25Serires);
+    
+    if(arrayPm25Serires.length>=10)
+    { 
+        for(var i=0;i<=(arrayPm25Serires.length-9);i++)
+        {
+            arrayPm25Serires.shift();
+        }
+    }
+    
+    arrayPm25Serires.push(data.items[0].payload.data.pm25.toFixed(2));
+    localStorage.setItem("pm25Series",arrayPm25Serires);   
+    
+}
