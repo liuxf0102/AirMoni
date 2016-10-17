@@ -516,9 +516,17 @@ function js_saveIOTData(data)
 {
     //get data from localStorage
     //localStorage.setItem("pm25Series",data.items[0].payload.data.pm25.toFixed(2));    
-    var arrayPm25Serires=JSON.parse("["+localStorage.getItem("pm25Series")+"]");
-    console.log("arrageSize:"+arrayPm25Serires);
+    js_saveIOTDataPM25(data);
     
+}
+
+function js_saveIOTDataPM25(data)
+{
+    //data
+    var pm25Series = [];
+    if (!localStorage.pm25Series) localStorage.pm25Series = JSON.stringify(pm25Series);
+    var arrayPm25Serires=JSON.parse(localStorage.getItem("pm25Series"));
+    console.log("array Series Size:"+arrayPm25Serires);
     if(arrayPm25Serires.length>=10)
     { 
         for(var i=0;i<=(arrayPm25Serires.length-9);i++)
@@ -528,6 +536,41 @@ function js_saveIOTData(data)
     }
     
     arrayPm25Serires.push(data.items[0].payload.data.pm25.toFixed(2));
-    localStorage.setItem("pm25Series",arrayPm25Serires);   
+    localStorage.setItem("pm25Series",JSON.stringify(arrayPm25Serires));
+    
+    //group
+    //
+    var pm25Groups = [];
+    //window.localStorage.setItem("pm25Groups",JSON.stringify(pm25Groups));
+    if (!localStorage.pm25Groups) localStorage.pm25Groups = JSON.stringify(pm25Groups);
+   //localStorage.setItem("pm25Groups",{"ddd""dd"});
+    var dateStr=timeStamp2String(data.items[0].eventTime);
+    console.log("dateStr:"+dateStr);
+    var arrayPm25Groups=JSON.parse(localStorage.pm25Groups);
+    console.log("array Group Size:"+arrayPm25Groups.length);
+    if(arrayPm25Groups.length>=10)
+    { 
+        for(var i=0;i<=(arrayPm25Groups.length-9);i++)
+        {
+            arrayPm25Groups.shift();
+        }
+    }
+    
+    arrayPm25Groups.push(dateStr);
+    localStorage.setItem("pm25Groups",JSON.stringify(arrayPm25Groups));
+    
     
 }
+
+function timeStamp2String(time){  
+    var datetime = new Date();  
+    datetime.setTime(time);  
+    var year = datetime.getFullYear();  
+    var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;  
+    var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();  
+    var hour = datetime.getHours()< 10 ? "0" + datetime.getHours() : datetime.getHours();  
+    var minute = datetime.getMinutes()< 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();  
+    var second = datetime.getSeconds()< 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();  
+   //return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;  
+   return  hour+":"+minute+":"+second;  
+}  
