@@ -69,15 +69,13 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
 
                     js_var_chart_option = option = {
                         title: {
-                            text: '最近10分钟数据',
+                            text: 'PM25 最近10分钟数据',
                             subtext: 'oracle IoT'
                         },
                         tooltip: {
                             trigger: 'axis'
                         },
-                        legend: {
-                            data: ['PM25']
-                        },
+                     
                         toolbox: {
                             show: true,
                             feature: {
@@ -156,8 +154,11 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
         }
 );
 
-function js_refreshDataFromLocal(timeType, chartType)
+function js_refreshDataFromLocal(timeType)
 {
+var charType = getUrlParam('chartType');
+                    console.log("charType:" + charType + " timeType:" + timeType);
+
 
     var groups = new Array();
     var lineItems = new Array();
@@ -179,7 +180,32 @@ function js_refreshDataFromLocal(timeType, chartType)
         console.log("keyItem:" + keyItem + " value:" + itemValue);
         if (itemValue !== null && itemValue.toString().length > 10)
         {
-            itemValue = JSON.parse(itemValue).payload.data.pm25.toFixed(2);
+            if(charType=="PM25"){
+               itemValue = JSON.parse(itemValue).payload.data.pm25.toFixed(2);
+               js_var_chart_option.title.text="PM2.5 历史数据";
+            }
+            if(charType=="PM10"){
+               itemValue = JSON.parse(itemValue).payload.data.pm10.toFixed(2);
+               js_var_chart_option.title.text="PM10 历史数据";
+            }
+            if(charType=="hcho"){
+               itemValue = JSON.parse(itemValue).payload.data.hcho.toFixed(2);
+               js_var_chart_option.title.text="甲醛 历史数据";
+            }
+            if(charType=="vocs"){
+               itemValue = JSON.parse(itemValue).payload.data.vocs.toFixed(2);
+               js_var_chart_option.title.text="挥发物 历史数据";
+            }
+            if(charType=="temperature"){
+               itemValue = JSON.parse(itemValue).payload.data.temperature.toFixed(2);
+               js_var_chart_option.title.text="温度 历史数据";
+            }
+            if(charType=="humidity"){
+               itemValue = JSON.parse(itemValue).payload.data.humidity.toFixed(2);
+               js_var_chart_option.title.text="湿度 历史数据";
+            }
+            
+            
         }
         lineItems.push(itemValue);
     }
@@ -309,4 +335,11 @@ function js_refreshDataFromServer()
         js_getDataByTime("Day", (new Date().getTime() - 24 * 60 * 60 * 1000 * (10 - i)));
     }
 
+}
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null)
+        return unescape(r[2]);
+    return null; //返回参数值
 }
