@@ -217,7 +217,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         axisLine: {// 坐标轴线
                                             show: true, // 默认显示，属性show控制显示与否
                                             lineStyle: {// 属性lineStyle控制线条样式
-                                                color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
+                                                color: [[0.35, 'green'],  [0.7, 'orange'], [1, 'red']],
                                                 width: 30
                                             }
                                         },
@@ -273,7 +273,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
@@ -329,7 +329,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
@@ -385,7 +385,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'], [0.5, 'yellow'], [0.7, 'orange'], [1, 'red']],
+                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, 'red']],
                                         width: 30
                                     }
                                 },
@@ -450,7 +450,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
 );
 function gaugeClicked(chartType)
 {
-    parent.location = "index.html?root=graphics&chartType="+chartType;
+    parent.location = "index.html?root=incidents&chartType="+chartType;
 }
 
 function js_getIOTData()
@@ -463,7 +463,7 @@ function js_getIOTData()
 //        });
 //    return;
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1',
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device=AAAAAAR1RL0A-BE&limit=10',
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },
@@ -473,28 +473,57 @@ function js_getIOTData()
         cache: false,
         success: function (data) {
             // alert(self.decryptByDES(data) );
-            console.log(data);
-            js_var_chart3_option.series[0].data[0].value = data.items[0].payload.data.pm25.toFixed(2);
+            console.log("data:length:"+data.items.length);
+            var pm25=0;
+            var pm10=0;
+            var hcho=0;
+            var vocs=0;
+            var temperature=0;
+            var humidity=0;
+            var js_dataAll;
+            if(data.items.length==10)
+            {
+                for(var i=0;i<10;i++)
+                {
+                    console.log("data length:"+data.items[i].payload.data.length)
+                    if(data.items[i].type=="DATA")
+                    {
+                       pm25=data.items[i].payload.data.pm25.toFixed(2);
+                       pm10=data.items[i].payload.data.pm10.toFixed(2);
+                       hcho=data.items[i].payload.data.hcho.toFixed(2);
+                       vocs=data.items[i].payload.data.vocs.toFixed(2);
+                       temperature=data.items[i].payload.data.temperature.toFixed(2);
+                       humidity=data.items[i].payload.data.humidity.toFixed(2);
+                       
+                       js_dataAll =data.items[i];
+                       break;
+                    }
+                }
+               
+            }
+            
+            
+            js_var_chart3_option.series[0].data[0].value = pm25;
             js_var_chart3.setOption(js_var_chart3_option, true);
 
-            js_var_chart4_option.series[0].data[0].value = data.items[0].payload.data.pm10.toFixed(2);
+            js_var_chart4_option.series[0].data[0].value = pm10;
             js_var_chart4.setOption(js_var_chart4_option, true);
 
-            js_var_chart5_option.series[0].data[0].value = data.items[0].payload.data.hcho.toFixed(2);
+            js_var_chart5_option.series[0].data[0].value = hcho
             js_var_chart5.setOption(js_var_chart5_option, true);
 
 
-            js_var_chart6_option.series[0].data[0].value = data.items[0].payload.data.vocs.toFixed(2);
+            js_var_chart6_option.series[0].data[0].value = vocs;
             js_var_chart6.setOption(js_var_chart6_option, true);
             
-            js_var_chart1_option.series[0].data[0].value = data.items[0].payload.data.temperature.toFixed(2);
+            js_var_chart1_option.series[0].data[0].value = temperature;
             js_var_chart1.setOption(js_var_chart1_option, true);
 
-            js_var_chart2_option.series[0].data[0].value = data.items[0].payload.data.humidity.toFixed(2);
+            js_var_chart2_option.series[0].data[0].value = humidity;
             js_var_chart2.setOption(js_var_chart2_option, true);
 
             
-           js_saveIOTData(data);
+           //js_saveIOTData(js_dataAll);
             
           
         },
@@ -516,11 +545,6 @@ function js_saveIOTData(data)
     //get data from localStorage
     //localStorage.setItem("pm25Series",data.items[0].payload.data.pm25.toFixed(2));    
     js_saveIOTDataPM25(data);
-    js_saveIOTDataPM10(data);
-    js_saveIOTDataHcho(data);
-    js_saveIOTDataVocs(data);
-    js_saveIOTDataTemperature(data);
-    js_saveIOTDataHumidity(data);
     
 }
 
@@ -539,7 +563,7 @@ function js_saveIOTDataPM25(data)
         }
     }
     
-    arrayPm25Serires.push(data.items[0].payload.data.pm25.toFixed(2));
+    arrayPm25Serires.push(data.payload.data.pm25.toFixed(2));
     localStorage.setItem("pm25Series",JSON.stringify(arrayPm25Serires));
     
     //group
@@ -548,7 +572,7 @@ function js_saveIOTDataPM25(data)
     //window.localStorage.setItem("pm25Groups",JSON.stringify(pm25Groups));
     if (!localStorage.pm25Groups) localStorage.pm25Groups = JSON.stringify(pm25Groups);
    //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
+    var dateStr=timeStamp2String(data.eventTime);
     console.log("dateStr:"+dateStr);
     var arrayPm25Groups=JSON.parse(localStorage.pm25Groups);
     console.log("array Group Size:"+arrayPm25Groups.length);
@@ -562,256 +586,6 @@ function js_saveIOTDataPM25(data)
     
     arrayPm25Groups.push(dateStr);
     localStorage.setItem("pm25Groups",JSON.stringify(arrayPm25Groups));
-    
-    
-}
-function js_saveIOTDataPM10(data)
-{
-    //data
-    var pm10Series = [];
-    if (!localStorage.pm10Series) localStorage.pm10Series = JSON.stringify(pm10Series);
-    var arrayPm10Serires=JSON.parse(localStorage.getItem("pm10Series"));
-    console.log("array Series Size:"+arrayPm10Serires);
-    if(arrayPm10Serires.length>=10)
-    { 
-        for(var i=0;i<=(arrayPm10Serires.length-9);i++)
-        {
-            arrayPm10Serires.shift();
-        }
-    }
-    
-    arrayPm10Serires.push(data.items[0].payload.data.pm10.toFixed(2));
-    localStorage.setItem("pm10Series",JSON.stringify(arrayPm10Serires));
-    
-    //group
-    //
-    var pm10Groups = [];
-    
-    if (!localStorage.pm10Groups) localStorage.pm10Groups = JSON.stringify(pm10Groups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayPm10Groups=JSON.parse(localStorage.pm10Groups);
-    console.log("array Group Size:"+arrayPm10Groups.length);
-    if(arrayPm10Groups.length>=10)
-    { 
-        for(var i=0;i<=(arrayPm10Groups.length-9);i++)
-        {
-            arrayPm10Groups.shift();
-        }
-    }
-    
-    arrayPm10Groups.push(dateStr);
-    localStorage.setItem("pm10Groups",JSON.stringify(arrayPm10Groups));
-    
-    
-}
-
-function js_saveIOTDataPM10(data)
-{
-    //data
-    var pm10Series = [];
-    if (!localStorage.pm10Series) localStorage.pm10Series = JSON.stringify(pm10Series);
-    var arrayPm10Serires=JSON.parse(localStorage.getItem("pm10Series"));
-    console.log("array Series Size:"+arrayPm10Serires);
-    if(arrayPm10Serires.length>=10)
-    { 
-        for(var i=0;i<=(arrayPm10Serires.length-9);i++)
-        {
-            arrayPm10Serires.shift();
-        }
-    }
-    
-    arrayPm10Serires.push(data.items[0].payload.data.pm10.toFixed(2));
-    localStorage.setItem("pm10Series",JSON.stringify(arrayPm10Serires));
-    
-    //group
-    //
-    var pm10Groups = [];
-    
-    if (!localStorage.pm10Groups) localStorage.pm10Groups = JSON.stringify(pm10Groups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayPm10Groups=JSON.parse(localStorage.pm10Groups);
-    console.log("array Group Size:"+arrayPm10Groups.length);
-    if(arrayPm10Groups.length>=10)
-    { 
-        for(var i=0;i<=(arrayPm10Groups.length-9);i++)
-        {
-            arrayPm10Groups.shift();
-        }
-    }
-    
-    arrayPm10Groups.push(dateStr);
-    localStorage.setItem("pm10Groups",JSON.stringify(arrayPm10Groups));
-    
-    
-}
-
-function js_saveIOTDataHcho(data)
-{
-    //data
-    var hchoSeries = [];
-    if (!localStorage.hchoSeries) localStorage.hchoSeries = JSON.stringify(hchoSeries);
-    var arrayHchoSerires=JSON.parse(localStorage.getItem("hchoSeries"));
-    console.log("array Series Size:"+arrayHchoSerires);
-    if(arrayHchoSerires.length>=10)
-    { 
-        for(var i=0;i<=(arrayHchoSerires.length-9);i++)
-        {
-            arrayHchoSerires.shift();
-        }
-    }
-    
-    arrayHchoSerires.push(data.items[0].payload.data.hcho.toFixed(2));
-    localStorage.setItem("hchoSeries",JSON.stringify(arrayHchoSerires));
-    
-    //group
-    //
-    var hchoGroups = [];
-    
-    if (!localStorage.hchoGroups) localStorage.hchoGroups = JSON.stringify(hchoGroups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayHchoGroups=JSON.parse(localStorage.hchoGroups);
-    console.log("array Group Size:"+arrayHchoGroups.length);
-    if(arrayHchoGroups.length>=10)
-    { 
-        for(var i=0;i<=(arrayHchoGroups.length-9);i++)
-        {
-            arrayHchoGroups.shift();
-        }
-    }
-    
-    arrayHchoGroups.push(dateStr);
-    localStorage.setItem("hchoGroups",JSON.stringify(arrayHchoGroups));
-    
-    
-}
-function js_saveIOTDataVocs(data)
-{
-    //data
-    var vocsSeries = [];
-    if (!localStorage.vocsSeries) localStorage.vocsSeries = JSON.stringify(vocsSeries);
-    var arrayVocsSerires=JSON.parse(localStorage.getItem("vocsSeries"));
-    console.log("array Series Size:"+arrayVocsSerires);
-    if(arrayVocsSerires.length>=10)
-    { 
-        for(var i=0;i<=(arrayVocsSerires.length-9);i++)
-        {
-            arrayVocsSerires.shift();
-        }
-    }
-    
-    arrayVocsSerires.push(data.items[0].payload.data.vocs.toFixed(2));
-    localStorage.setItem("vocsSeries",JSON.stringify(arrayVocsSerires));
-    
-    //group
-    //
-    var vocsGroups = [];
-    
-    if (!localStorage.vocsGroups) localStorage.vocsGroups = JSON.stringify(vocsGroups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayVocsGroups=JSON.parse(localStorage.vocsGroups);
-    console.log("array Group Size:"+arrayVocsGroups.length);
-    if(arrayVocsGroups.length>=10)
-    { 
-        for(var i=0;i<=(arrayVocsGroups.length-9);i++)
-        {
-            arrayVocsGroups.shift();
-        }
-    }
-    
-    arrayVocsGroups.push(dateStr);
-    localStorage.setItem("vocsGroups",JSON.stringify(arrayVocsGroups));
-    
-    
-}
-
-function js_saveIOTDataTemperature(data)
-{
-    //data
-    var temperatureSeries = [];
-    if (!localStorage.temperatureSeries) localStorage.temperatureSeries = JSON.stringify(temperatureSeries);
-    var arrayTemperatureSerires=JSON.parse(localStorage.getItem("temperatureSeries"));
-    console.log("array Series Size:"+arrayTemperatureSerires);
-    if(arrayTemperatureSerires.length>=10)
-    { 
-        for(var i=0;i<=(arrayTemperatureSerires.length-9);i++)
-        {
-            arrayTemperatureSerires.shift();
-        }
-    }
-    
-    arrayTemperatureSerires.push(data.items[0].payload.data.temperature.toFixed(2));
-    localStorage.setItem("temperatureSeries",JSON.stringify(arrayTemperatureSerires));
-    
-    //group
-    //
-    var temperatureGroups = [];
-    
-    if (!localStorage.temperatureGroups) localStorage.temperatureGroups = JSON.stringify(temperatureGroups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayTemperatureGroups=JSON.parse(localStorage.temperatureGroups);
-    console.log("array Group Size:"+arrayTemperatureGroups.length);
-    if(arrayTemperatureGroups.length>=10)
-    { 
-        for(var i=0;i<=(arrayTemperatureGroups.length-9);i++)
-        {
-            arrayTemperatureGroups.shift();
-        }
-    }
-    
-    arrayTemperatureGroups.push(dateStr);
-    localStorage.setItem("temperatureGroups",JSON.stringify(arrayTemperatureGroups));
-    
-    
-}
-
-function js_saveIOTDataHumidity(data)
-{
-    //data
-    var humiditySeries = [];
-    if (!localStorage.humiditySeries) localStorage.humiditySeries = JSON.stringify(humiditySeries);
-    var arrayHumiditySerires=JSON.parse(localStorage.getItem("humiditySeries"));
-    console.log("array Series Size:"+arrayHumiditySerires);
-    if(arrayHumiditySerires.length>=10)
-    { 
-        for(var i=0;i<=(arrayHumiditySerires.length-9);i++)
-        {
-            arrayHumiditySerires.shift();
-        }
-    }
-    
-    arrayHumiditySerires.push(data.items[0].payload.data.humidity.toFixed(2));
-    localStorage.setItem("humiditySeries",JSON.stringify(arrayHumiditySerires));
-    
-    //group
-    //
-    var humidityGroups = [];
-    
-    if (!localStorage.humidityGroups) localStorage.humidityGroups = JSON.stringify(humidityGroups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayHumidityGroups=JSON.parse(localStorage.humidityGroups);
-    console.log("array Group Size:"+arrayHumidityGroups.length);
-    if(arrayHumidityGroups.length>=10)
-    { 
-        for(var i=0;i<=(arrayHumidityGroups.length-9);i++)
-        {
-            arrayHumidityGroups.shift();
-        }
-    }
-    
-    arrayHumidityGroups.push(dateStr);
-    localStorage.setItem("humidityGroups",JSON.stringify(arrayHumidityGroups));
     
     
 }

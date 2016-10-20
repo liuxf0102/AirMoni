@@ -5,152 +5,308 @@
 /*
  * Your incidents ViewModel code goes here
  */
- 
-var data = [];
-var now = +new Date(1997, 9, 3);
-var oneDay = 24 * 3600 * 1000;
-var value = Math.random() * 1000;
 
-function randomData() {
-    now = new Date(+now + oneDay);
-    value = Math.random() * 21;
-    return {
-        name: now.toString(),
-        value: [
-            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-            Math.round(value)
-        ]
+var data = [];
+var js_var_chart;
+var js_var_chart_option;
+define(['ojs/ojcore', 'knockout', 'jquery'],
+        function (oj, ko, $) {
+
+            function IncidentsViewModel() {
+                var self = this;
+                // Below are a subset of the ViewModel methods invoked by the ojModule binding
+                // Please reference the ojModule jsDoc for additionaly available methods.
+
+                /**
+                 * Optional ViewModel method invoked when this ViewModel is about to be
+                 * used for the View transition.  The application can put data fetch logic
+                 * here that can return a Promise which will delay the handleAttached function
+                 * call below until the Promise is resolved.
+                 * @param {Object} info - An object with the following key-value pairs:
+                 * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+                 * @param {Function} info.valueAccessor - The binding's value accessor.
+                 * @return {Promise|undefined} - If the callback returns a Promise, the next phase (attaching DOM) will be delayed until
+                 * the promise is resolved
+                 */
+                self.handleActivated = function (info) {
+                    // Implement if needed
+                };
+
+                /**
+                 * Optional ViewModel method invoked after the View is inserted into the
+                 * document DOM.  The application can put logic that requires the DOM being
+                 * attached here.
+                 * @param {Object} info - An object with the following key-value pairs:
+                 * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+                 * @param {Function} info.valueAccessor - The binding's value accessor.
+                 * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
+                 */
+                self.handleAttached = function (info) {
+                    // Implement if needed
+                };
+
+
+                /**
+                 * Optional ViewModel method invoked after the bindings are applied on this View. 
+                 * If the current View is retrieved from cache, the bindings will not be re-applied
+                 * and this callback will not be invoked.
+                 * @param {Object} info - An object with the following key-value pairs:
+                 * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+                 * @param {Function} info.valueAccessor - The binding's value accessor.
+                 */
+                self.handleBindingsApplied = function (info) {
+                    // Implement if needed
+
+                    var myheight = $(document).height() - 190;
+                    /*高为屏幕的高*/
+                    $("#main").css({
+                        height: function () {
+                            return myheight;
+                        },
+                        width: "80%"
+                    });
+                    js_var_chart = echarts.init(document.getElementById('main'));
+
+                    js_var_chart_option = option = {
+                        title: {
+                            text: '最近10分钟数据',
+                            subtext: 'oracle IoT'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['PM25']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: false},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        calculable: true,
+                        xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisTick:{interval:0},
+                                data: []
+                                
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: 'PM25',
+                                type: 'line',
+                                markPoint: {
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                },
+                                markLine: {
+                                    data: [
+                                        {type: 'average', name: '平均值'}
+                                    ]
+                                }
+                            }]
+                    };
+                    js_var_chart.setOption(js_var_chart_option);
+                    
+                    js_refreshDataFromServer();
+                     setInterval(function () {
+                     
+                     
+                     }, 1000);
+                     js_refreshDataFromLocal("Minute");
+                     
+                };
+
+                /*
+                 * Optional ViewModel method invoked after the View is removed from the
+                 * document DOM.
+                 * @param {Object} info - An object with the following key-value pairs:
+                 * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+                 * @param {Function} info.valueAccessor - The binding's value accessor.
+                 * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
+                 */
+                self.handleDetached = function (info) {
+                    // Implement if needed
+                };
+            }
+
+            /*
+             * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
+             * each time the view is displayed.  Return an instance of the ViewModel if
+             * only one instance of the ViewModel is needed.
+             */
+            return new IncidentsViewModel();
+        }
+);
+
+function js_refreshDataFromLocal(timeType, chartType)
+{
+
+    var groups = new Array();
+    var lineItems = new Array();
+    for (var i = 0; i < 10; i++)
+    {
+        var keyItem = "";
+        if (timeType == "Minute") {
+            keyItem = timeStamp2String("Minute",new Date().getTime() - 60 * 1000 * (10 - i));
+        }
+        if (timeType == "Hour") {
+            keyItem = timeStamp2String("Hour",new Date().getTime() - 60 * 60 * 1000 * (10 - i));
+        }
+        if (timeType == "Day") {
+            keyItem = timeStamp2String("Day",new Date().getTime() - 24 * 60 * 60 * 1000 * (10 - i));
+        }
+
+        groups.push(keyItem);
+        itemValue = localStorage.getItem(keyItem);
+        console.log("keyItem:" + keyItem + " value:" + itemValue);
+        if (itemValue !== null && itemValue.toString().length > 10)
+        {
+            itemValue = JSON.parse(itemValue).payload.data.pm25.toFixed(2);
+        }
+        lineItems.push(itemValue);
+    }
+    console.log("lineItems:" + lineItems);
+    js_var_chart_option.series[0].data = lineItems;
+    js_var_chart_option.xAxis[0].data = groups;
+    //js_var_chart_option.xAxis[0](category).axisTick.interval=0;
+    js_var_chart.setOption(js_var_chart_option);
+}
+
+function timeStamp2String(timeType, time) {
+    var datetime = new Date();
+    datetime.setTime(time);
+    var year = datetime.getFullYear();
+    var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+    var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+    var hour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+    var minute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+    var second = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+    //return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;  
+    if (timeType == 'Minute') {
+        return  month + "-" + date + " " + hour + ":" + minute;
+    } else if (timeType == 'Hour')
+    {
+        return  month + "-" + date + " " + hour + ":" + "00";
+    } else {
+        return  month + "-" + date;
     }
 }
 
-for (var i = 0; i < 100; i++) {
-    data.push(randomData());
-} 
-define(['ojs/ojcore', 'knockout', 'jquery'],
- function(oj, ko, $) {
-  
-    function IncidentsViewModel() {
-      var self = this;
-      // Below are a subset of the ViewModel methods invoked by the ojModule binding
-      // Please reference the ojModule jsDoc for additionaly available methods.
+function js_getDataByTime(timeType, untilTime)
+{
+    var aj = $.ajax({
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device=AAAAAAR1RL0A-BE&limit=10&since=' + (untilTime - 1000 * 60) + '&until=' + untilTime,
+        headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
-      /**
-       * Optional ViewModel method invoked when this ViewModel is about to be
-       * used for the View transition.  The application can put data fetch logic
-       * here that can return a Promise which will delay the handleAttached function
-       * call below until the Promise is resolved.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @return {Promise|undefined} - If the callback returns a Promise, the next phase (attaching DOM) will be delayed until
-       * the promise is resolved
-       */
-      self.handleActivated = function(info) {
-        // Implement if needed
-      };
+        },
+        ContentType: "application/javascript;charset=utf-8",
+        type: 'get',
+        dataType: 'json',
+        cache: false,
+        // async:false, 
+        success: function (data) {
+            // alert(self.decryptByDES(data) );
+            console.log("data:length:" + data.items.length);
+            var pm25 = 0;
+            var pm10 = 0;
+            var hcho = 0;
+            var vocs = 0;
+            var temperatue = 0;
+            var humidity = 0;
+            var js_dataAll;
+            if (data.items.length == 10)
+            {
+                for (var i = 0; i < 10; i++)
+                {
+                    //console.log("data length:"+data.items[i].payload.data.length)
+                    if (data.items[i].type == "DATA")
+                    {
+                        pm25 = data.items[i].payload.data.pm25.toFixed(2);
+                        pm10 = data.items[i].payload.data.pm10.toFixed(2);
+                        hcho = data.items[i].payload.data.hcho.toFixed(2);
+                        vocs = data.items[i].payload.data.vocs.toFixed(2);
+                        temperature = data.items[i].payload.data.temperature.toFixed(2);
+                        humidity = data.items[i].payload.data.humidity.toFixed(2);
 
-      /**
-       * Optional ViewModel method invoked after the View is inserted into the
-       * document DOM.  The application can put logic that requires the DOM being
-       * attached here.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
-       */
-      self.handleAttached = function(info) {
-        // Implement if needed
-      };
+                        js_dataAll = data.items[i];
+                        //console.log("time:" + data.items[i].eventTimeAsString + " pm25:" + pm25 + " humidity：" + humidity);
+//                        js_saveIOTData("pm25" + type + "Series", js_dataAll.payload.data.pm25.toFixed(2));
+//                        js_saveIOTData("pm10" + type + "Series", js_dataAll.payload.data.pm10.toFixed(2));
+//                        js_saveIOTData("hcho" + type + "Series", js_dataAll.payload.data.hcho.toFixed(2));
+//                        js_saveIOTData("vocs" + type + "Series", js_dataAll.payload.data.vocs.toFixed(2));
+//                        js_saveIOTData("temperature" + type + "Series", js_dataAll.payload.data.temperature.toFixed(2));
+//                        js_saveIOTData("humidity" + type + "Series", js_dataAll.payload.data.humidity.toFixed(2));
+//                        js_saveIOTData(type + "Groups", timeStamp2String(js_dataAll.eventTime));
+                        js_saveTempData(timeStamp2String(timeType, js_dataAll.eventTime), js_dataAll);
+                        break;
+                    }
+                }
+
+            }
 
 
-      /**
-       * Optional ViewModel method invoked after the bindings are applied on this View. 
-       * If the current View is retrieved from cache, the bindings will not be re-applied
-       * and this callback will not be invoked.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       */
-      self.handleBindingsApplied = function(info) {
-        // Implement if needed
-		
-		var myheight=$(document).height()-90;  
- /*高为屏幕的高*/       
- $("#main").css({           
-     height: function () {           
-         return myheight;       
-     },           
-     width:"100%"
- });   
-var myChart = echarts.init(document.getElementById('main'));
-for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
+
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            // view("异常！");  
+            //alert("error");
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log("errorThrown=" + errorThrown);
+
+        }
+    });
+
+    //alert(2);
+
+}
+
+
+function js_saveTempData(keyItem, dataItem)
+{
+    //data
+    localStorage.setItem(keyItem, JSON.stringify(dataItem));
+    console.log("localData:key:" + keyItem + "  value:" + localStorage.getItem(keyItem));
+
+}
+function js_refreshDataFromServer()
+{
+
+    //////get Data from IOT
+    for (var i = 0; i < 10; i++)
+    {
+        js_getDataByTime("Minute", (new Date().getTime() - 60 * 1000 * (10 - i)));
     }
-option = {
-    title: {
-        text: '温度历史曲线'
-    },
-    tooltip: {
-        trigger: 'axis',
-        formatter: function (params) {
-            params = params[0];
-            var date = new Date(params.name);
-            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-        },
-        axisPointer: {
-            animation: false
-        }
-    },
-    xAxis: {
-        type: 'time',
-        splitLine: {
-            show: false
-        }
-    },
-    yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%'],
-        splitLine: {
-            show: false
-        },
-		max:'30'
-    },
-    series: [{
-        name: '模拟数据',
-        type: 'line',
-        showSymbol: false,
-        hoverAnimation: false,
-        data: data
-    }]
-};
-    myChart.setOption(option);
-/*	
-setInterval(function () {
-
-    
-}, 1000);
-*/
-      };
-
-      /*
-       * Optional ViewModel method invoked after the View is removed from the
-       * document DOM.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
-       */
-      self.handleDetached = function(info) {
-        // Implement if needed
-      };
+    //////get Data from IOT
+//////get Data from IOT
+    for (var i = 0; i < 10; i++)
+    {
+        js_getDataByTime("Hour", (new Date().getTime() - 60 * 60 * 1000 * (10 - i)));
     }
 
-    /*
-     * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
-     * each time the view is displayed.  Return an instance of the ViewModel if
-     * only one instance of the ViewModel is needed.
-     */
-    return new IncidentsViewModel();
-  }
-);
+    //////get Data from IOT
+    for (var i = 0; i < 10; i++)
+    {
+        js_getDataByTime("Day", (new Date().getTime() - 24 * 60 * 60 * 1000 * (10 - i)));
+    }
+
+}
