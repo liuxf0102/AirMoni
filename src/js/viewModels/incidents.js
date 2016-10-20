@@ -69,7 +69,7 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
 
                     js_var_chart_option = option = {
                         title: {
-                            text: 'PM25 最近10分钟数据',
+                            text: 'PM25 历史数据',
                             subtext: 'oracle IoT'
                         },
                         tooltip: {
@@ -106,7 +106,7 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
                         ],
                         series: [
                             {
-                                name: 'PM25',
+                                name: 'Value',
                                 type: 'line',
                                 markPoint: {
                                     data: [
@@ -187,6 +187,7 @@ var charType = getUrlParam('chartType');
             if(charType=="PM10"){
                itemValue = JSON.parse(itemValue).payload.data.pm10.toFixed(2);
                js_var_chart_option.title.text="PM10 历史数据";
+               js_var_chart_option.series.name="PM10";
             }
             if(charType=="hcho"){
                itemValue = JSON.parse(itemValue).payload.data.hcho.toFixed(2);
