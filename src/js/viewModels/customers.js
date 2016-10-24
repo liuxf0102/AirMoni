@@ -463,7 +463,7 @@ function js_getIOTData()
 //        });
 //    return;
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device=AAAAAAR1RL0A-AE&limit=10',
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10',
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },
@@ -544,7 +544,7 @@ function js_saveIOTData(data)
 {
     //get data from localStorage
     //localStorage.setItem("pm25Series",data.items[0].payload.data.pm25.toFixed(2));    
-    js_saveIOTDataPM25(data);
+    //js_saveIOTDataPM25(data);
     
 }
 

@@ -77,3 +77,5 @@ require(['ojs/ojcore', 'knockout', 'appController', 'ojs/ojknockout',
 
   }
 );
+
+var js_var_cur_device='AAAAAAR1RL0A-AE';

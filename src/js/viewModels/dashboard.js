@@ -228,10 +228,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
 //                       var marker = new BMap.Marker(pt,{icon:myIcon});
                        var marker = new BMap.Marker(pt); // 创建点
                         
-                        //var label = new window.BMap.Label("ddd"+i, { offset: new window.BMap.Size(20, -10) });  
-                        //marker.setLabel(label);
-                        marker.setTitle("检测点");
-                        marker.setAnimation(BMAP_ANIMATION_BOUNCE); 
+                        var label = new window.BMap.Label("检测点:"+(i+1), { offset: new window.BMap.Size(20, -10) });  
+                        marker.setLabel(label);
+                        marker.setTitle("检测点:"+(i+1));
+                        //marker.device="device"+i;
+                        //marker.setAnimation(BMAP_ANIMATION_BOUNCE); 
                         
                         map.addOverlay(marker);    //增加点
                         pointArray[i] = new BMap.Point(json_data[i][0], json_data[i][1]);
@@ -242,10 +243,33 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                    // map.setViewport(pointArray);
                     //获取覆盖物位置
                     function attribute(e) {
-                        //alert();
-                        //var p = e.target;
+                        var p = e.target;
+                        //alert(p.getTitle());
+                        if(p.getTitle()=="检测点:1")
+                        {
+                            js_var_cur_device='AAAAAAR1RL0A-AE';
+                            localStorage.cur_device=js_var_cur_device;
+                            //alert(1);
+                        }
+                        if(p.getTitle()=="检测点:2")
+                        {
+                            js_var_cur_device='AAAAAAR1RL0A-BE';
+                            localStorage.cur_device=js_var_cur_device;
+                           //alert(2);
+                        }
+                        if(p.getTitle()=="检测点:3")
+                        {
+                            js_var_cur_device='AAAAAAR1RL0A-CE';
+                            localStorage.cur_device=js_var_cur_device;
+                        }
+                         if(p.getTitle()=="检测点:4")
+                        {
+                            js_var_cur_device='AAAAAAR1RL0A-DE';
+                            localStorage.cur_device=js_var_cur_device;
+                        }
                         //alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat+"p："+p.getTitle());
-                        parent.location = "index.html?root=customers&device=";
+                        
+                        parent.location = "index.html?root=customers";
                     }
 
                 };
