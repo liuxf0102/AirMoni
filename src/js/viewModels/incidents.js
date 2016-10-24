@@ -69,7 +69,7 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
 
                     js_var_chart_option = option = {
                         title: {
-                            text: 'PM25 历史数据',
+                            text: '历史数据',
                             subtext: 'oracle IoT'
                         },
                         tooltip: {
@@ -142,6 +142,31 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
                  */
                 self.handleDetached = function (info) {
                     // Implement if needed
+                };
+                self.selectedMenuItem = function (obj) {};
+                self.menuItemSelect = function (event, ui) {
+                    self.selectedMenuItem(ui.item.children("a").text());
+                    //alert(ui.item.children("a").text());
+                    if (ui.item.children("a").text() == "仪表盘") {
+                        parent.location = "index.html?root=customers";
+                    } else if (ui.item.children("a").text() == "PM2.5") {
+                        parent.location = "index.html?root=incidents&chartType=PM25";
+                    } else if (ui.item.children("a").text() == "PM10") {
+                        parent.location = "index.html?root=incidents&chartType=PM10";
+                    } else if (ui.item.children("a").text() == "甲醛") {
+                        parent.location = "index.html?root=incidents&chartType=hcho";
+                    } else if (ui.item.children("a").text() == "挥发物") {
+                        parent.location = "index.html?root=incidents&chartType=vocs";
+                    } else if (ui.item.children("a").text() == "温度") {
+                        parent.location = "index.html?root=incidents&chartType=temperature";
+                    } else if (ui.item.children("a").text() == "湿度") {
+                        parent.location = "index.html?root=incidents&chartType=humidity";
+                    } else if (ui.item.children("a").text() == "刷新数据") {
+                       // parent.location = "index.html?root=incidents&chartType=humidity";
+                       js_refreshDataFromServer();
+                    } else {
+                        parent.location = "index.html?root=dashboard";
+                    }
                 };
             }
 
@@ -240,7 +265,7 @@ function timeStamp2String(timeType, time) {
 function js_getDataByTime(timeType, untilTime)
 {
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device=AAAAAAR1RL0A-BE&limit=10&since=' + (untilTime - 1000 * 60) + '&until=' + untilTime,
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device=AAAAAAR1RL0A-AE&limit=10&since=' + (untilTime - 1000 * 60) + '&until=' + untilTime,
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },
