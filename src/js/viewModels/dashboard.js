@@ -218,15 +218,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                     //map.centerAndZoom(point, 15);  
                     // var marker = new BMap.Marker(point);
 
-                    var json_data = [[116.304, 39.985], [116.383752, 39.91334], [116.4502, 39.932241], [116.4802, 39.84241]];
+                    var json_data = [[116.334, 39.985], [116.383752, 39.91334], [116.4502, 39.932241], [116.4602, 39.84241]];
                     var pointArray = new Array();
                     for (var i = 0; i < json_data.length; i++) {
                         
                        var pt = new BMap.Point(json_data[i][0], json_data[i][1]);
-//                      var myIcon = new BMap.Icon("css/images/led.gif", new BMap.Size(40,40));
+                      var myIcon = new BMap.Icon("css/images/led.gif", new BMap.Size(40,40));
 //                    
-//                       var marker = new BMap.Marker(pt,{icon:myIcon});
-                       var marker = new BMap.Marker(pt); // 创建点
+                      var marker = new BMap.Marker(pt,{icon:myIcon});
+                       //var marker = new BMap.Marker(pt); // 创建点
                         
                         var label = new window.BMap.Label("检测点:"+(i+1), { offset: new window.BMap.Size(20, -10) });  
                         marker.setLabel(label);
@@ -240,7 +240,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                         marker.addEventListener("click", attribute);
                     }
                     //让所有点在视野范围内
-                   // map.setViewport(pointArray);
+                    map.setViewport(pointArray);
                     //获取覆盖物位置
                     function attribute(e) {
                         var p = e.target;
