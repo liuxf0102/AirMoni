@@ -1,6 +1,56 @@
+
+ <table width="100%"><tr><td>
+            <a href="index.html?root=dashboard">
+                <span class="oj-navigationlist-item-icon
+                      demo-home-icon-24 demo-icon-font-24">
+                </span>
+                首页
+            </a>
+         </td><td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;空气质量检测</b></td><td style="text-align: right">
+             
+             <div id='menubutton-container'>
+  <button id="menuButton"
+          data-bind="ojComponent: {component: 'ojButton', label: '菜单', 
+                                   menu: '#myMenu'}">
+  </button>
+  <!-- To handle menu item selection, use a select listener as shown, not a click listener. -->
+  <ul id="myMenu" style="display:none"
+      data-bind="ojComponent: {component: 'ojMenu', select: menuItemSelect}">
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon demo-icon-font demo-palette-icon-24"></span>仪表盘</a>
+    </li>
+    <li>---------------------------------</li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>PM2.5</a>
+    </li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>PM10</a>
+    </li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>甲醛</a>
+    </li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>挥发物</a>
+    </li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>温度</a>
+    </li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>湿度</a>
+    </li>
+    
+  </ul>
+  
+</div>
+             
+             
+             
+             
+         </td></table>
+<hr>
 <div id='chart-container'>
     <div style="float:left;line-height:32px;font-weight:bold;padding-right:16px">
-        温度变化:
+        历史数据图标:
     </div>
     
     <div id="lineChart" data-bind="ojComponent: {
@@ -15,7 +65,42 @@
         }"
          style="max-width:500px;width:100%;height:350px;">
     </div>
-    <label data-bind="attr: {for: id}"></label>
     <br><br><br><br>
-   
+    <div class="oj-flex oj-flex-items-pad">
+    <div class="oj-flex-item oj-sm-12">
+            
+            <div
+               data-bind="ojComponent: {component: 'ojConveyorBelt'}">
+                    <div data-bind="ojComponent:{
+                                        component: 'ojNavigationList',
+                                        drillMode: 'none',
+                                        selection: '',
+                                        edge: 'top'}">
+                    <ul>
+                        <li id="home" data-bind="click:js_refreshData('Minute')">
+                          <a href="#" >
+                              
+                              最近10分钟
+                          </a>
+                        </li>
+                        <li id="gettingstarted" data-bind="click:js_refreshData('Hour')">
+                          <a href="#">
+                           
+                              最近10小时
+                          </a>
+                        </li>
+                        <li id="longlabel" data-bind="click:js_refreshData('Day')">
+                          <a href="#">
+                             
+                              最近10天
+                          </a>
+                        </li>
+                      
+                    </ul>
+                    </div>
+                </div>
+        </div>
+    
+    </div>
 </div>
+<a href="#" onclick="js_getDataFromServer()">刷新数据</a>

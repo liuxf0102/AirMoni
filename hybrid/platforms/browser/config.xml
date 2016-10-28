@@ -2,10 +2,10 @@
 <widget id="org.oraclejet.apps" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>AirMoni</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A sample Oracle JavaScript Extension Toolkit (JET) mobile app based on Cordova
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="undefined" href="undefined">
+        Oracle Jet Team
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -15,4 +15,5 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <hook src="scripts/hooks/jetAfterPrepare.js" type="after_prepare" />
 </widget>
