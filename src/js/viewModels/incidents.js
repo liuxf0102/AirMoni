@@ -253,19 +253,23 @@ function timeStamp2String(timeType, time) {
     var second = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
     //return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;  
     if (timeType == 'Minute') {
-        return  month + "-" + date + " " + hour + ":" + minute;
+        retValue=  month + "-" + date + " " + hour + ":" + minute;
     } else if (timeType == 'Hour')
     {
-        return  month + "-" + date + " " + hour + ":" + "00";
+        retValue=  month + "-" + date + " " + hour + ":" + "00";
     } else {
-        return  month + "-" + date;
+        retValue=  month + "-" + date;
     }
+    
+    //localStorage.cur_device.indexOf("AE");
+    
+    return retValue;
 }
 
 function js_getDataByTime(timeType, untilTime)
 {
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60) + '&until=' + untilTime,
+        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60 * 60) + '&until=' + untilTime,
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },
