@@ -44,6 +44,32 @@
         <link rel="stylesheet" href="css/override.css" type="text/css"/>
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=lxGdpFHaFEvakjvDqafMc814pRI2XEuR"></script> 
         <script type="text/javascript" src="js/echarts.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            document.addEventListener("deviceready", function () {
+            //alert("123689");
+            var u = navigator.userAgent;
+            //alert("u____" + u)
+            if (u.indexOf('Android') > - 1 || u.indexOf('Linux') > - 1) {
+            if (localStorage.getItem("baiduPushReg") != "true")
+            {
+            window.baidupush.startWork("MdZC4s0eZedaupfd13pSYEwi", function (info) {
+            //alert('success__' + info);
+            });
+            //Set tags
+            window.baidupush.setTags(["air"], function (info) {
+            //your code here
+            });
+            localStorage.setItem("baiduPushReg", "true");
+            }
+            } else if (u.indexOf('iPhone') > - 1) {
+//            window.baidupush.startWork("IOS app key ", function(info){
+//            // alert('success__'+info);
+//            });
+            }
+
+
+            }, true);
+        </script>               
     </head>
     <body class="oj-web-applayout-body">
         <!-- Template for rendering navigation items shared between nav bar and nav list -->
@@ -120,42 +146,42 @@
                 </div>
                     
         </div>
-                 -->
-        <!--
-        <div role="navigation" class="oj-web-applayout-max-width oj-web-applayout-navbar">
-
-            <div data-bind="ojComponent: {component: 'ojNavigationList',
-      navigationLevel: 'application',
-      item: {template: 'navTemplate'}, data: navDataSource,
-      selection: router.stateId, edge: 'top'}"
-                 class="oj-web-applayout-navbar oj-sm-only-hide oj-md-condense oj-md-justify-content-flex-end">
-            </div>
-
-        </div>
-        -->
-    </header>
-    <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content" data-bind="ojModule: router.moduleConfig">
-    </div>
-    <footer class="oj-web-applayout-footer" role="contentinfo">
-        <div class="oj-web-applayout-footer-item oj-web-applayout-max-width">
-
-            <ul>
-                <!-- ko foreach: footerLinks -->
-                <!--
-    <li><a data-bind="text : name, attr : {id: linkId, href : linkTarget}"></a></li>
                 -->
-                <!-- /ko -->
-            </ul>
-        </div>
-        <div class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-secondary-color oj-text-sm">
-            Copyright © 2014, 2016 Oracle and/or its affiliates All rights reserved.
-        </div>
-    </footer>
-</div>
-</div>
+                <!--
+                <div role="navigation" class="oj-web-applayout-max-width oj-web-applayout-navbar">
+        
+                    <div data-bind="ojComponent: {component: 'ojNavigationList',
+              navigationLevel: 'application',
+              item: {template: 'navTemplate'}, data: navDataSource,
+              selection: router.stateId, edge: 'top'}"
+                         class="oj-web-applayout-navbar oj-sm-only-hide oj-md-condense oj-md-justify-content-flex-end">
+                    </div>
+        
+                </div>
+                -->
+            </header>
+            <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content" data-bind="ojModule: router.moduleConfig">
+            </div>
+            <footer class="oj-web-applayout-footer" role="contentinfo">
+                <div class="oj-web-applayout-footer-item oj-web-applayout-max-width">
 
-<script type="text/javascript" src="js/libs/require/require.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+                    <ul>
+                        <!-- ko foreach: footerLinks -->
+                        <!--
+            <li><a data-bind="text : name, attr : {id: linkId, href : linkTarget}"></a></li>
+                        -->
+                        <!-- /ko -->
+                    </ul>
+                </div>
+                <div class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-secondary-color oj-text-sm">
+                    Copyright © 2014, 2016 Oracle and/or its affiliates All rights reserved.
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/libs/require/require.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
 
 </body>
