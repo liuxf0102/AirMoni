@@ -259,12 +259,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                         }
                         if(p.getTitle()=="检测点:3")
                         {
-                            js_var_cur_device='AAAAAAR1RL0A-CE';
+                            js_var_cur_device='AAAAAAR1RL0A-AE';
                             localStorage.cur_device=js_var_cur_device;
                         }
                          if(p.getTitle()=="检测点:4")
                         {
-                            js_var_cur_device='AAAAAAR1RL0A-DE';
+                            js_var_cur_device='AAAAAAR1RL0A-BE';
                             localStorage.cur_device=js_var_cur_device;
                         }
                         //alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat+"p："+p.getTitle());
