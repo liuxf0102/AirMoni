@@ -51,6 +51,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                  */
                 self.handleActivated = function (info) {
                     // Implement if needed
+                    
                 };
 
                 /**
@@ -453,6 +454,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 
                 
                 setInterval("js_getIOTData()", 5000);
+                
+               
+               
             }
 
             /*
@@ -617,3 +621,8 @@ function timeStamp2String(time){
    //return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;  
    return  month + "-" + date+ " " + hour+":"+ minute ;
 }  
+
+function js_showCheckPoint()
+{
+    document.getElementById("span_checkPoint").innerHtml="ddd";
+}
