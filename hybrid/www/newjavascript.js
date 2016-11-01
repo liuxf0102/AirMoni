@@ -1,41 +1,25 @@
-function js_saveIOTDataHumidity(data)
-{
-    //data
-    var humiditySeries = [];
-    if (!localStorage.humiditySeries) localStorage.humiditySeries = JSON.stringify(humiditySeries);
-    var arrayHumiditySerires=JSON.parse(localStorage.getItem("humiditySeries"));
-    console.log("array Series Size:"+arrayHumiditySerires);
-    if(arrayHumiditySerires.length>=10)
-    { 
-        for(var i=0;i<=(arrayHumiditySerires.length-9);i++)
+document.addEventListener("deviceready", function () {
+    //alert("123689");
+    var u = navigator.userAgent;
+    //alert("u____" + u)
+    if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
+        if (localStorage.getItem("baiduPushReg") != "true")
         {
-            arrayHumiditySerires.shift();
+            window.baidupush.startWork("MdZC4s0eZedaupfd13pSYEwi", function (info) {
+                //alert('success__' + info);
+            });
+
+            //Set tags
+            window.baidupush.setTags(["air"], function (info) {
+                //your code here
+            });
+            localStorage.setItem("baiduPushReg", "true");
         }
+    } else if (u.indexOf('iPhone') > -1) {
+//            window.baidupush.startWork("IOS app key ", function(info){
+//            // alert('success__'+info);
+//            });
     }
-    
-    arrayHumiditySerires.push(data.items[0].payload.data.humidity.toFixed(2));
-    localStorage.setItem("humiditySeries",JSON.stringify(arrayHumiditySerires));
-    
-    //group
-    //
-    var humidityGroups = [];
-    
-    if (!localStorage.humidityGroups) localStorage.humidityGroups = JSON.stringify(humidityGroups);
-   //localStorage.setItem("pm25Groups",{"ddd""dd"});
-    var dateStr=timeStamp2String(data.items[0].eventTime);
-    console.log("dateStr:"+dateStr);
-    var arrayHumidityGroups=JSON.parse(localStorage.humidityGroups);
-    console.log("array Group Size:"+arrayHumidityGroups.length);
-    if(arrayHumidityGroups.length>=10)
-    { 
-        for(var i=0;i<=(arrayHumidityGroups.length-9);i++)
-        {
-            arrayHumidityGroups.shift();
-        }
-    }
-    
-    arrayHumidityGroups.push(dateStr);
-    localStorage.setItem("humidityGroups",JSON.stringify(arrayHumidityGroups));
-    
-    
-}
+
+
+}, true);

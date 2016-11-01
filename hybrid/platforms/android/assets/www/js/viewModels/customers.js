@@ -435,8 +435,17 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 self.handleDetached = function (info) {
                     // Implement if needed
                 };
-
+                
+                //show checkPoint;
+                
+               
+                
+                
                 js_getIOTData();
+                
+                //clear localStorage data
+                
+                
                 setInterval("js_getIOTData()", 5000);
             }
 

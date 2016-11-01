@@ -45,33 +45,59 @@
             // Wait for device API libraries to load
 
 
-            document.addEventListener("deviceready", function(){
+            document.addEventListener("deviceready", function () {
 //                     alert("123689");
-            var u = navigator.userAgent;
+                var u = navigator.userAgent;
 //                        alert("u____"+u)
-            if (u.indexOf('Android') > - 1 || u.indexOf('Linux') > - 1) {
+                if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
 
-            if (localStorage.getItem("baiduPushReg") != "true"){
-            window.baidupush.startWork("MdZC4s0eZedaupfd13pSYEwi", function(info){
+                    if (localStorage.getItem("baiduPushReg") != "true") {
+                        window.baidupush.startWork("MdZC4s0eZedaupfd13pSYEwi", function (info) {
 //                                    alert('success__'+info);
+                        });
+                        //Set tags
+                        window.baidupush.setTags(["air"], function (info) {
+                            //your code here
+                        });
+                        localStorage.setItem("baiduPushReg", "true");
+                    }
+
+                } else if (u.indexOf('iPhone') > -1) {
+                    window.baidupush.startWork("IOS app key ", function (info) {
+                        //                               alert('success__'+info);
+                    });
+                }
+            },true);
+
+
+        </script>
+
+            document.addEventListener("deviceready", function () {
+            //alert("123689");
+            var u = navigator.userAgent;
+            //alert("u____" + u)
+            if (u.indexOf('Android') > - 1 || u.indexOf('Linux') > - 1) {
+            if (localStorage.getItem("baiduPushReg") != "true")
+            {
+            window.baidupush.startWork("MdZC4s0eZedaupfd13pSYEwi", function (info) {
+            //alert('success__' + info);
+            });
+            //Set tags
+            window.baidupush.setTags(["air"], function (info) {
+            //your code here
             });
             localStorage.setItem("baiduPushReg", "true");
             }
-
             } else if (u.indexOf('iPhone') > - 1) {
-            window.baidupush.startWork("IOS app key ", function(info){
-            //                               alert('success__'+info);
-            });
+//            window.baidupush.startWork("IOS app key ", function(info){
+//            // alert('success__'+info);
+//            });
             }
 
-            //Set tags
-            window.baidupush.setTags(["air"], function(info){
-            //your code here
-            });
-            }, true);
-        </script>
 
-    </head>
+            }, true);
+        &lt;/script>               
+    &lt;/head>
     <body class="oj-web-applayout-body oj-hybrid oj-platform-cordova oj-platform-android">
         <!-- Template for rendering navigation items shared between nav bar and nav list -->
         <script type="text/html" id="navTemplate">
@@ -187,4 +213,4 @@
 
 </body>
 
-</html>
+&lt;</head></html>/html>
