@@ -220,7 +220,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                         axisLine: {// 坐标轴线
                                             show: true, // 默认显示，属性show控制显示与否
                                             lineStyle: {// 属性lineStyle控制线条样式
-                                                color: [[0.35, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
+                                                color: [[0.1, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
                                                 width: 30
                                             }
                                         },
@@ -277,7 +277,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
+                                        color: [[0.1, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
                                         width: 30
                                     }
                                 },
@@ -334,7 +334,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
+                                        color: [[0.2, 'green'],  [0.55, 'orange'], [1, '#ff4500']],
                                         width: 30
                                     }
                                 },
@@ -391,7 +391,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                                 axisLine: {// 坐标轴线
                                     show: true, // 默认显示，属性show控制显示与否
                                     lineStyle: {// 属性lineStyle控制线条样式
-                                        color: [[0.35, 'green'],  [0.7, 'orange'], [1, '#ff4500']],
+                                        color: [[0.2, 'green'],  [0.55, 'orange'], [1, '#ff4500']],
                                         width: 30
                                     }
                                 },
