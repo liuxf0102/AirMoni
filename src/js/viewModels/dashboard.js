@@ -247,19 +247,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                         //alert(p.getTitle());
                         if(p.getTitle()=="检测点:1")
                         {
-                            js_var_cur_device='AAAAAAR1RL0A-AE';
+                            js_var_cur_device='AAAAAAR1RL0A-FA';
                             localStorage.cur_device=js_var_cur_device;
                             //alert(1);
                         }
                         if(p.getTitle()=="检测点:2")
                         {
-                            js_var_cur_device='AAAAAAR1RL0A-BE';
+                            js_var_cur_device='AAAAAAR1RL0A-AE';
                             localStorage.cur_device=js_var_cur_device;
                            //alert(2);
                         }
                         if(p.getTitle()=="检测点:3")
                         {
-                            js_var_cur_device='AAAAAAR1RL0A-AE';
+                            js_var_cur_device='AAAAAAR1RL0A-BE';
                             localStorage.cur_device=js_var_cur_device;
                         }
                          if(p.getTitle()=="检测点:4")
