@@ -66,8 +66,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                 self.handleBindingsApplied = function (info) {
                     // Implement if needed
                     //alert('handleBindingsApplied');
-
-
+                    js_getDevices();
+                    
                     /*高为屏幕的高*/
                     $("#map").css({
                         height: function () {
