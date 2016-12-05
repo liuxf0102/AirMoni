@@ -518,6 +518,8 @@ console.log("iot server url:"+js_var_IOTServer+'/iot/api/v2/messages?&device='+l
                        humidity=data.items[i].payload.data.humidity.toFixed(2);
                        
                        js_dataAll =data.items[i];
+                                             
+                       localStorage.setItem("storageLastEventTime",data.items[i].eventTime);
                        break;
                     }
                 }

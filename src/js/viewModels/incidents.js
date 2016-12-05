@@ -182,8 +182,8 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
 function js_refreshDataFromLocal(timeType)
 {
 var charType = getUrlParam('chartType');
-                    console.log("charType:" + charType + " timeType:" + timeType);
-
+    console.log("charType:" + charType + " timeType:" + timeType);
+var lastEventTime=parseInt(localStorage.getItem("storageLastEventTime"));
 
     var groups = new Array();
     var lineItems = new Array();
@@ -191,13 +191,13 @@ var charType = getUrlParam('chartType');
     {
         var keyItem = "";
         if (timeType == "Minute") {
-            keyItem = timeStamp2String("Minute",new Date().getTime() - 60 * 1000 * (10 - i));
+            keyItem = timeStamp2String("Minute",lastEventTime - 60 * 1000 * (10 - i));
         }
         if (timeType == "Hour") {
-            keyItem = timeStamp2String("Hour",new Date().getTime() - 60 * 60 * 1000 * (10 - i));
+            keyItem = timeStamp2String("Hour",lastEventTime - 60 * 60 * 1000 * (10 - i));
         }
         if (timeType == "Day") {
-            keyItem = timeStamp2String("Day",new Date().getTime() - 24 * 60 * 60 * 1000 * (10 - i));
+            keyItem = timeStamp2String("Day",lastEventTime- 24 * 60 * 60 * 1000 * (10 - i));
         }
 
         groups.push(keyItem);
@@ -269,7 +269,7 @@ function timeStamp2String(timeType, time) {
 function js_getDataByTime(timeType, untilTime)
 {
     var serverURL =js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60 * 60 * 24) + '&until=' + untilTime;
-    console.log("serverURL:"+serverURL)
+    console.log(timeStamp2String(timeType,untilTime)+":serverURL:"+serverURL)
     var aj = $.ajax({
         url: serverURL,
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
@@ -313,7 +313,7 @@ function js_getDataByTime(timeType, untilTime)
 //                        js_saveIOTData("temperature" + type + "Series", js_dataAll.payload.data.temperature.toFixed(2));
 //                        js_saveIOTData("humidity" + type + "Series", js_dataAll.payload.data.humidity.toFixed(2));
 //                        js_saveIOTData(type + "Groups", timeStamp2String(js_dataAll.eventTime));
-                        js_saveTempData(timeStamp2String(timeType, js_dataAll.eventTime), js_dataAll);
+                        js_saveTempData(timeStamp2String(timeType, untilTime), js_dataAll);
                         break;
                     }
                 }
@@ -348,23 +348,24 @@ function js_saveTempData(keyItem, dataItem)
 }
 function js_refreshDataFromServer()
 {
-
+    console.log("localStorage.storageLastEventTime:",localStorage.storageLastEventTime);
+    var lastEventTime=parseInt(localStorage.getItem("storageLastEventTime"));
     //////get Data from IOT
     for (var i = 0; i < 10; i++)
     {
-        js_getDataByTime("Minute", (new Date().getTime() - 60 * 1000 * (10 - i)));
+        js_getDataByTime("Minute", (lastEventTime - 60 * 1000 * (10 - i)));
     }
     //////get Data from IOT
 //////get Data from IOT
     for (var i = 0; i < 10; i++)
     {
-        js_getDataByTime("Hour", (new Date().getTime() - 60 * 60 * 1000 * (10 - i)));
+        js_getDataByTime("Hour", (lastEventTime - 60 * 60 * 1000 * (10 - i)));
     }
 
     //////get Data from IOT
     for (var i = 0; i < 10; i++)
     {
-        js_getDataByTime("Day", (new Date().getTime() - 24 * 60 * 60 * 1000 * (10 - i)));
+        js_getDataByTime("Day", (lastEventTime - 24 * 60 * 60 * 1000 * (10 - i)));
     }
 
 }
