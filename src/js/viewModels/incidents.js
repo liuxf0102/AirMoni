@@ -268,8 +268,10 @@ function timeStamp2String(timeType, time) {
 
 function js_getDataByTime(timeType, untilTime)
 {
+    var serverURL =js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60 * 60 * 24) + '&until=' + untilTime;
+    console.log("serverURL:"+serverURL)
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60 * 60 * 24) + '&until=' + untilTime,
+        url: serverURL,
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },

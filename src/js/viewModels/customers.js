@@ -474,6 +474,7 @@ function gaugeClicked(chartType)
 
 function js_getIOTData()
 {
+    
 //    $.ajaxSettings("dataType","jsonp");
 //    $.post('https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?type=data&limit=1',{"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM=",
 //            "X-Content-Type-Options":"nosniff"
@@ -481,8 +482,10 @@ function js_getIOTData()
 //            alert(1);
 //        });
 //    return;
+console.log("iot server url:"+js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10')
+
     var aj = $.ajax({
-        url: 'https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10',
+        url: js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10',
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },
@@ -504,7 +507,7 @@ function js_getIOTData()
             {
                 for(var i=0;i<10;i++)
                 {
-                    console.log("data length:"+data.items[i].payload.data.length)
+                    console.log("data length:"+JSON.stringify(data.items[i].payload.data));
                     if(data.items[i].type=="DATA")
                     {
                        pm25=data.items[i].payload.data.pm25.toFixed(2);

@@ -7,8 +7,28 @@
                 <span class="oj-navigationlist-item-icon
                       demo-home-icon-24 demo-icon-font-24">
                 </span>
-                首页
-            </a>
-        </td><td><b>空气质量检测</b></td><td></td></table>
+             </a>
+        </td><td  width="98%" style="text-align: center" ><b>空气质量检测</b></td><td  width="1%" style="text-align: right">
+             <div id='menubutton-container'>
+  <button id="menuButton"
+          data-bind="ojComponent: {component: 'ojButton', label: '菜单', 
+                                   menu: '#myMenu'}">
+  </button>
+  <!-- To handle menu item selection, use a select listener as shown, not a click listener. -->
+  <ul id="myMenu" style="display:none"
+      data-bind="ojComponent: {component: 'ojMenu', select: menuItemSelect}">
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>扫描下载</a>
+    </li>
+    <li>---------------------------------</li>
+    <li id="fwkIcon1">
+      <a href="#"><span class="oj-menu-item-icon oj-fwk-icon oj-fwk-icon-caret-end"></span>刷新数据</a>
+    </li>
+  </ul>
+  
+</div>
+            
+            
+        </td></table>
 <hr>
 <div id="map" class="map"></div>
