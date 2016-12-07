@@ -132,6 +132,8 @@ function js_getLocalDevices()
     {
         localStorage.storageLocalDevices="";
         js_getDevices();
+        
+        
     }
     console.log("js_var_devices:"+ JSON.stringify(localStorage.getItem("storageLocalDevices")));
     if (localStorage.storageLocalDevices&&localStorage.getItem("storageLocalDevices").length>0)
@@ -140,6 +142,7 @@ function js_getLocalDevices()
            localDevices=JSON.parse(localStorage.getItem("storageLocalDevices"));
            js_var_devices =localDevices;
     }else{
+        localStorage.storageLocalDevices="";
         js_getDevices();
     }
     
@@ -154,7 +157,7 @@ function js_setSelectedDevices(data)
     for(var i=0;i<js_var_devices.length;i++)
     {
         console.log("data indexOf:"+data.indexOf(js_var_devices[i].description));
-        if(data.indexOf(js_var_devices[i].description)>0)
+        if(data.indexOf(js_var_devices[i].description)>=0)
         {
               js_var_cur_device=js_var_devices[i].id;
               localStorage.cur_device=js_var_cur_device;
@@ -171,7 +174,7 @@ function js_showCheckPoint()
         /* 信息窗口 */
                     var map = new BMap.Map('map');
                     var point = new BMap.Point(116.404, 39.915);
-                    map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);     // 初始化地图,设置中心点坐标和地图级别
+                    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);     // 初始化地图,设置中心点坐标和地图级别
                     map.enableScrollWheelZoom();
                     //map.centerAndZoom(point, 15);  
                     // var marker = new BMap.Marker(point);
@@ -186,9 +189,9 @@ function js_showCheckPoint()
                       var marker = new BMap.Marker(pt,{icon:myIcon});
                        //var marker = new BMap.Marker(pt); // 创建点
                         
-                        var label = new window.BMap.Label("检测点:"+localDevices[i].description, { offset: new window.BMap.Size(20, -10) });  
+                        var label = new window.BMap.Label(" "+localDevices[i].description, { offset: new window.BMap.Size(-15, -25) });  
                         marker.setLabel(label);
-                        marker.setTitle("检测点:"+localDevices[i].description);
+                        marker.setTitle(" "+localDevices[i].description);
                         //marker.device="device"+i;
                         //marker.setAnimation(BMAP_ANIMATION_BOUNCE); 
                         
@@ -197,9 +200,13 @@ function js_showCheckPoint()
                         //pointArray[i].a="dddd";
                         marker.addEventListener("click", attribute);
                     }
+                    //add some point in the view;
+                    //pointArray.push(new BMap.Point(116.5502, 39.932241));
+                   // pointArray[4]= new BMap.Point(116.1502, 39.98);
+                    
                     
                     //让所有点在视野范围内
-                    map.setViewport(pointArray);
+                   //map.setViewport(pointArray);
                     
                      //获取覆盖物位置
                     function attribute(e) {
@@ -215,7 +222,7 @@ function js_showCheckPoint()
                        js_setSelectedDevices(p.getTitle());
                         //alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat+"p："+p.getTitle());
                         
-                       parent.location = "index.html?root=customers";
+                     //  parent.location = "index.html?root=customers";
                     }
 
                 
