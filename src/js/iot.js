@@ -15,7 +15,7 @@ function js_getDevices()
     
     js_var_devices=[];
     
-    js_device_count=0;
+    js_device_count=1;
     var iotServiceURL = js_var_IOTServer + "/iot/api/v2/apps/AAAAAAR1RL0A-AI/devices";
 
     var aj = $.ajax({
@@ -87,7 +87,7 @@ function js_getDevicesLocation()
                 localStorage.setItem("storageLocalDevices",JSON.stringify(js_var_devices));
                 js_device_count++;
                 console.log("js_device_count:" + js_device_count);
-                if(js_device_count==js_var_devices.length)
+                if(js_device_count>js_var_devices.length)
                 {
                     parent.location = "index.html?root=dashboard";
                 }
@@ -138,12 +138,14 @@ function js_getLocalDevices()
     console.log("js_var_devices:"+ JSON.stringify(localStorage.getItem("storageLocalDevices")));
     if (localStorage.storageLocalDevices&&localStorage.getItem("storageLocalDevices").length>0)
     {
-           console.log("js_var_devices1:");
+           console.log("js_var_devices from storage:");
            localDevices=JSON.parse(localStorage.getItem("storageLocalDevices"));
            js_var_devices =localDevices;
     }else{
-        localStorage.storageLocalDevices="";
-        js_getDevices();
+        if(getUrlParam('refreshData')!='true'){
+            localStorage.storageLocalDevices="";
+            js_getDevices();
+        }
     }
     
     return localDevices;
@@ -222,7 +224,7 @@ function js_showCheckPoint()
                        js_setSelectedDevices(p.getTitle());
                         //alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat+"p："+p.getTitle());
                         
-                     //  parent.location = "index.html?root=customers";
+                       parent.location = "index.html?root=customers";
                     }
 
                 
