@@ -77,8 +77,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
 
                     });
 
-               
-                js_showCheckPoint();
+               js_getDevices();
+               // js_showCheckPoint();
                    
                 };
 
@@ -98,7 +98,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojnavigationlist', 'ojs/ojswitc
                  self.menuItemSelect = function (event, ui) {
                     self.selectedMenuItem(ui.item.children("a").text());
                     //alert(ui.item.children("a").text());
-                    if (ui.item.children("a").text() == "扫描下载") {
+                    if (ui.item.children("a").text() == "软件升级") {
                         parent.location = "index.html?root=performance";
                     } else if (ui.item.children("a").text() == "刷新数据") {
                         parent.location = "index.html?root=dashboard&refreshData=true";

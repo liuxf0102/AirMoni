@@ -4,20 +4,17 @@
  * and open the template in the editor.
  */
 var js_var_devices = [];
+var js_var_currentVersion ="1.0.3";
+var js_var_latestVersion ="1.0.1";
 
-var js_device_count=0;
- 
 var js_var_IOTServer = "https://apac-a419718.iot.europe.oraclecloud.com";
 //var js_var_IOTServer = "https://iotpmjapac1641-seoracletrial13180.iot.us.oraclecloud.com";
 
 function js_getDevices()
 {
-    
-    js_var_devices=[];
-    
-    js_device_count=1;
     var iotServiceURL = js_var_IOTServer + "/iot/api/v2/apps/AAAAAAR1RL0A-AI/devices";
 
+    console.log("devices list:" + iotServiceURL);
     var aj = $.ajax({
         url: iotServiceURL,
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="},
@@ -27,27 +24,29 @@ function js_getDevices()
         cache: false,
         success: function (data) {
             // alert(self.decryptByDES(data) );
-            console.log("data:length:" + data.items);
+            console.log("data:length:" +JSON.stringify(data.items));
 
             if (data.items.length > 0)
             {
                 for (var i = 0; i < data.items.length; i++)
                 {
-                    console.log("data id:" + data.items[i].id);
+                    
                     var js_device = new Object();
                     js_device.id = data.items[i].id;
-                    js_device.description = data.items[i].description;
-                    js_device.latitude='';
+                    var deviceProperties=JSON.parse(data.items[i].description);
+                    js_device.description=deviceProperties.label;
+                    js_device.latitude=deviceProperties.latitude;
+                    js_device.longitude=deviceProperties.longitude;
+                    js_device.version=deviceProperties.version;
+                    console.log("js_device:" + JSON.stringify(js_device));
                     js_var_devices.push(js_device);
                 }
             }
 
-        js_getDevicesLocation();
-
-
-
-            //js_saveIOTData(js_dataAll);
-
+          //js_saveIOTData(js_dataAll);
+          js_showCheckPoint();
+          
+          js_checkVersion();
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -61,96 +60,7 @@ function js_getDevices()
     });
 }
 
-function js_getDevicesLocation()
-{
-    for (var i = 0; i < js_var_devices.length; i++) {
 
-        var iotLocationURL = js_var_IOTServer + "/iot/api/v2/devices/" + js_var_devices[i].id + "/location";
-        console.log("iotLocationURL:" + iotLocationURL);
-        var aj = $.ajax({
-            url: iotLocationURL,
-            headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="},
-            ContentType: "application/javascript;charset=utf-8",
-            type: 'get',
-            dataType: 'json',
-            cache: false,
-            username:'yukui.jin@oracle.com',
-            password:'Temp#123',
-            success: function (data) {
-                // alert(self.decryptByDES(data) );
-                console.log("data:" + JSON.stringify(data));
-                //console.log("data id:" + JSON.stringify(js_var_devices[0]));
-                js_setDevicesLocation(data);
-                //js_var_devices[i].latitude = data.latitude;
-                //js_var_devices[i].longitude = data.longitude;
-                //js_saveIOTData(js_dataAll);
-                localStorage.setItem("storageLocalDevices",JSON.stringify(js_var_devices));
-                js_device_count++;
-                console.log("js_device_count:" + js_device_count);
-                if(js_device_count>js_var_devices.length)
-                {
-                    parent.location = "index.html?root=dashboard";
-                }
-                
-            
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // view("异常！");  
-                //alert("error");
-                console.log(XMLHttpRequest);
-                console.log(textStatus);
-                console.log("errorThrown=" + errorThrown);
-
-            }
-        });
-    }
-    
-      
-    
-}
-
-
-function js_setDevicesLocation(data)
-{
-    console.log("data:"+data.links[0].href);
-    for(var i=0;i<js_var_devices.length;i++)
-    {
-        if(data.links[0].href.indexOf(js_var_devices[i].id)>0)
-        {
-            js_var_devices[i].latitude=data.latitude;
-            js_var_devices[i].longitude=data.longitude;
-            break;
-        }
-    }
-    console.log("js_var_devices:"+ JSON.stringify(js_var_devices));
-}
-
-function js_getLocalDevices()
-{
-    var localDevices = [];
-    if(getUrlParam('refreshData')=='true')
-    {
-        localStorage.storageLocalDevices="";
-        js_getDevices();
-        
-        
-    }
-    console.log("js_var_devices:"+ JSON.stringify(localStorage.getItem("storageLocalDevices")));
-    if (localStorage.storageLocalDevices&&localStorage.getItem("storageLocalDevices").length>0)
-    {
-           console.log("js_var_devices from storage:");
-           localDevices=JSON.parse(localStorage.getItem("storageLocalDevices"));
-           js_var_devices =localDevices;
-    }else{
-        if(getUrlParam('refreshData')!='true'){
-            localStorage.storageLocalDevices="";
-            js_getDevices();
-        }
-    }
-    
-    return localDevices;
-    
-}
 
 function js_setSelectedDevices(data)
 {
@@ -170,9 +80,23 @@ function js_setSelectedDevices(data)
    
 }
 
+function js_checkVersion()
+
+{
+    js_var_latestVersion=js_var_devices[0].version;
+    if(js_var_currentVersion<js_var_latestVersion)
+    {
+        parent.location = "index.html?root=performance&upgrade=true";
+    }
+    
+}
+
+
 
 function js_showCheckPoint()
 {
+    
+            console.log("js_showCheckPoint:" + JSON.stringify(js_var_devices));
         /* 信息窗口 */
                     var map = new BMap.Map('map');
                     var point = new BMap.Point(116.404, 39.915);
@@ -180,25 +104,25 @@ function js_showCheckPoint()
                     map.enableScrollWheelZoom();
                     //map.centerAndZoom(point, 15);  
                     // var marker = new BMap.Marker(point);
-                    var localDevices=js_getLocalDevices();
+                   
                     //var json_data = [[116.45505, 39.985], [116.383752, 39.91334], [116.4502, 39.932241]];
                     var pointArray = new Array();
-                    for (var i = 0; i < localDevices.length; i++) {
+                    for (var i = 0; i < js_var_devices.length; i++) {
                         
-                       var pt = new BMap.Point(localDevices[i].longitude, localDevices[i].latitude);
+                       var pt = new BMap.Point(js_var_devices[i].longitude, js_var_devices[i].latitude);
                       var myIcon = new BMap.Icon("css/images/led.gif", new BMap.Size(40,40));
 //                    
                       var marker = new BMap.Marker(pt,{icon:myIcon});
                        //var marker = new BMap.Marker(pt); // 创建点
                         
-                        var label = new window.BMap.Label(" "+localDevices[i].description, { offset: new window.BMap.Size(-15, -25) });  
+                        var label = new window.BMap.Label(" "+js_var_devices[i].description, { offset: new window.BMap.Size(-15, -25) });  
                         marker.setLabel(label);
-                        marker.setTitle(" "+localDevices[i].description);
+                        marker.setTitle(" "+js_var_devices[i].description);
                         //marker.device="device"+i;
                         //marker.setAnimation(BMAP_ANIMATION_BOUNCE); 
                         
                         map.addOverlay(marker);    //增加点
-                        pointArray[i] = new BMap.Point(localDevices[i].longitude, localDevices[i].latitude);
+                        pointArray[i] = new BMap.Point(js_var_devices[i].longitude, js_var_devices[i].latitude);
                         //pointArray[i].a="dddd";
                         marker.addEventListener("click", attribute);
                     }
