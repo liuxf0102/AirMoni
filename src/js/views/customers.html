@@ -18,12 +18,12 @@
  <div id="main5" onclick="gaugeClicked('hcho')"></div>
  <div id="main6" onclick="gaugeClicked('vocs')"></div>
  <div id="main1" onclick="gaugeClicked('temperature')"></div>
- <div id="main2" onclick="gaugeClicked('humidity')"></div>\
+ <div id="main2" onclick="gaugeClicked('humidity')"></div>
 <table width="100%" ><tr><td> 
  <hr/> 
 <table width="100%" ><tr><td>
 	<b>&nbsp;&nbsp;&nbsp;&nbsp;风扇开关<b></td>
-	<td align="right"><input id="switch" length="20" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked,optionChange: optionChangedHandler}" />&nbsp;&nbsp;&nbsp;</td></tr></table>
+	<td align="right"><input id="switch" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked,optionChange: optionChangedHandler,create:createHandler}" />&nbsp;&nbsp;&nbsp;</td></tr></table>
   
 </td></tr></table>
 <!--
