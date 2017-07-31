@@ -500,7 +500,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 //clear localStorage data
                 
                 
-               // setInterval("js_getIOTData()", 5000);
+                setInterval("js_getIOTData()", 5000);
                 
                 //ko.applyBindings(switchModel, document.getElementById('ojSwitch'));
                
