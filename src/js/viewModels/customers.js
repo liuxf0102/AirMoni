@@ -29,12 +29,59 @@ var js_var_chart6;
 var js_var_chart6_option;
 var js_var_chart6_value = 0;
 
+var js_switch_model;
 
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion', 'ojs/ojcollapsible', 'ojs/ojradioset'],
+
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion', 'ojs/ojcollapsible', 'ojs/ojradioset','ojs/ojswitch'],
         function (oj, ko, $) {
 
             function CustomerViewModel() {
                 var self = this;
+                
+                self.isChecked = ko.observable(false);
+                self.optionChangedHandler = function (event, ui) {
+                    
+                    if(ui.option=="value"){
+                    //alert(1);
+                    console.log(ui);
+                    var fanURL="";
+                    if(ui.value==true)
+                    {
+                     fanURL= js_var_IOTServer+'/iot/api/v2/apps/AAAAAAR1RL0A-AI/devices/AAAAAAGW-BWA-AE/deviceModels/urn:com:oracle:iot:china:am/actions/startFan';
+                    }
+                    if(ui.value==false)
+                    {
+                        fanURL=js_var_IOTServer+'/iot/api/v2/apps/AAAAAAR1RL0A-AI/devices/AAAAAAGW-BWA-AE/deviceModels/urn:com:oracle:iot:china:am/actions/stopFan';
+                    }
+                    console.log("fanURL="+fanURL);
+                    //打开风扇
+                    var aj = $.ajax({
+                    url:fanURL ,
+                    headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="},
+                    ContentType: "application/json",
+                    type: 'post',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        // alert(self.decryptByDES(data) );
+                        console.log(data);
+                       //js_saveIOTData(js_dataAll);
+
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        // view("异常！");  
+                        //alert("error");
+                        console.log(XMLHttpRequest);
+                        console.log(textStatus);
+                        console.log("errorThrown=" + errorThrown);
+
+                    }
+                });
+}
+                    
+                  }
+                
                 // Below are a subset of the ViewModel methods invoked by the ojModule binding
                 // Please reference the ojModule jsDoc for additionaly available methods.
 
@@ -53,7 +100,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                     // Implement if needed
                     
                 };
-
+               
                 /**
                  * Optional ViewModel method invoked after the View is inserted into the
                  * document DOM.  The application can put logic that requires the DOM being
@@ -453,18 +500,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion',
                 //clear localStorage data
                 
                 
-                setInterval("js_getIOTData()", 5000);
+               // setInterval("js_getIOTData()", 5000);
                 
-               
+                //ko.applyBindings(switchModel, document.getElementById('ojSwitch'));
                
             }
-
+            
             /*
              * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
              * each time the view is displayed.  Return an instance of the ViewModel if
              * only one instance of the ViewModel is needed.
              */
             return new CustomerViewModel();
+            
         }
 );
 function gaugeClicked(chartType)
@@ -631,3 +679,5 @@ function js_showCheckPoint()
 {
     document.getElementById("span_checkPoint").innerHtml="ddd";
 }
+
+

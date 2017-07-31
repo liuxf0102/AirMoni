@@ -1,3 +1,4 @@
+
 <!--
  Copyright (c) 2014, 2016, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
@@ -11,13 +12,20 @@
                 
             </a>
         </td><td width="98%" style="text-align: center"><b>空气质量检测</b><span id="span_checkPoint"></span></td><td></td></table>
-<hr>
+<hr/>
  <div id="main3" onclick="gaugeClicked('PM25')"></div>
  <div id="main4" onclick="gaugeClicked('PM10')"></div>
  <div id="main5" onclick="gaugeClicked('hcho')"></div>
  <div id="main6" onclick="gaugeClicked('vocs')"></div>
  <div id="main1" onclick="gaugeClicked('temperature')"></div>
- <div id="main2" onclick="gaugeClicked('humidity')"></div>
+ <div id="main2" onclick="gaugeClicked('humidity')"></div>\
+<table width="100%" ><tr><td> 
+ <hr/> 
+<table width="100%" ><tr><td>
+	<b>&nbsp;&nbsp;&nbsp;&nbsp;风扇开关<b></td>
+	<td align="right"><input id="switch" length="20" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked,optionChange: optionChangedHandler}" />&nbsp;&nbsp;&nbsp;</td></tr></table>
+  
+</td></tr></table>
 <!--
  Copyright (c) 2014, 2016, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
