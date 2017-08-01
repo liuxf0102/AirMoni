@@ -530,10 +530,10 @@ function js_getIOTData()
 //            alert(1);
 //        });
 //    return;
-console.log("iot server url:"+js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10')
+console.log("iot server url:"+js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=30')
 
     var aj = $.ajax({
-        url: js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10',
+        url: js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=30',
         headers: {"Authorization": "Basic eXVrdWkuamluQG9yYWNsZS5jb206VGVtcCMxMjM="
 
         },

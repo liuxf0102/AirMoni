@@ -268,7 +268,7 @@ function timeStamp2String(timeType, time) {
 
 function js_getDataByTime(timeType, untilTime)
 {
-    var serverURL =js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=10&since=' + (untilTime - 1000 * 60 * 60 * 24) + '&until=' + untilTime;
+    var serverURL =js_var_IOTServer+'/iot/api/v2/messages?&device='+localStorage.cur_device+'&limit=30&since=' + (untilTime - 1000 * 60 * 60 * 24) + '&until=' + untilTime;
     console.log(timeStamp2String(timeType,untilTime)+":serverURL:"+serverURL)
     var aj = $.ajax({
         url: serverURL,
