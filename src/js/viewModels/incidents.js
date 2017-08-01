@@ -290,9 +290,9 @@ function js_getDataByTime(timeType, untilTime)
             var temperatue = 0;
             var humidity = 0;
             var js_dataAll;
-            if (data.items.length == 10)
+            if (data.items.length == 30)
             {
-                for (var i = 0; i < 10; i++)
+                for (var i = 0; i < 30; i++)
                 {
                     //console.log("data length:"+data.items[i].payload.data.length)
                     if (data.items[i].type == "DATA")

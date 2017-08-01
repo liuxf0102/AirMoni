@@ -29,7 +29,6 @@ var js_var_chart6;
 var js_var_chart6_option;
 var js_var_chart6_value = 0;
 
-var js_switch_model;
 
 
 define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojaccordion', 'ojs/ojcollapsible', 'ojs/ojradioset','ojs/ojswitch'],
@@ -551,9 +550,9 @@ console.log("iot server url:"+js_var_IOTServer+'/iot/api/v2/messages?&device='+l
             var temperature=0;
             var humidity=0;
             var js_dataAll;
-            if(data.items.length==10)
+            if(data.items.length==30)
             {
-                for(var i=0;i<10;i++)
+                for(var i=0;i<30;i++)
                 {
                     console.log("data length:"+JSON.stringify(data.items[i].payload.data));
                     if(data.items[i].type=="DATA")
